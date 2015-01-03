@@ -20,12 +20,6 @@ alias -g ....='../../..'
 alias -g .....='../../../..'
 alias d='dirs -v'
 
-# easy cd
-th="$HOME/tex/math/th"
-tt="$HOME/tex/texing/test"
-wa="$HOME/.wine/drive_c/Team17/Worms Armageddon/User"
-: ~tt ~th ~wa
-
 # vim-related stuff
 alias -s tex=vim
 alias -s dtx=vim
@@ -235,6 +229,14 @@ tc() {
 }
 
 ## trucs locaux
+
+# debian stuff
+if which aptitude >/dev/null; then
+    alias acs='apt-cache search'
+    alias acw='apt-cache show'
+    alias acp='apt-cache policy'
+    alias dqw='dpkg-query -W -f='\''${Package;-40}${Version}\n'\'' | egrep'
+fi
 
 # misc
 alias mpt='ssh -t thue mocp'

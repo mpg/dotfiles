@@ -1,4 +1,4 @@
 # ~/.zlogout
 
-#clear
+clear
 
