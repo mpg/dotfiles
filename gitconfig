@@ -15,6 +15,7 @@
     default     = matching
 [diff]
     renames     = true
+    submodule   = log
 [rerere]
     enabled     = 1
 
