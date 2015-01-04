@@ -10,7 +10,7 @@ ZSHENV_LOADED="y"; export ZSHENV_LOADED
 case $(hostname) in
     *-mac) PATH='/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin' ;;
 esac
-path_prepend() { test -d "$1" && PATH="$1:$PATH" }
+path_prepend() { test -d "$1" && PATH="$1:$PATH"; }
 path_prepend "/usr/lib/ccache/bin"
 path_prepend "$HOME/usr/texlive/2014/bin/x86_64-linux"
 #path_prepend "/usr/local/Cellar/ccache/3.2/libexec"
