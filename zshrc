@@ -86,15 +86,23 @@ esac
 
 # enable color support of ls & friends (see .zaliasrc)
 if [ "$TERM" != "dumb" ]; then
-    eval "`dircolors -b`"
-    AUTOCOLOR='--color=auto'
+    zstyle ':completion:*:default' list-colors ''
+    case $(hostname) in
+        *-mac)
+            export CLICOLOR=YES
+            ;;
+        *)
+            eval "`dircolors -b`"
+            AUTOCOLOR='--color=auto'
+            ;;
+    esac
 fi
 
 # switch to english locale: compiler messages in French, seriously?
-# Pick en_US.utf8 as opposed to POSIX for the sake of UTF-8
+# Pick en_US.UTF-8 as opposed to POSIX for the sake of UTF-8
 # Keep dates in French.
-export LANG=en_US.utf8
-export LC_TIME=fr_FR.utf8
+export LANG=en_US.UTF-8
+export LC_TIME=fr_FR.UTF-8
 export LC_COLLATE=C
 
 # load aliases

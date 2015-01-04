@@ -7,13 +7,18 @@ test -n "${ZSHENV_LOADED:-}" && return
 ZSHENV_LOADED="y"; export ZSHENV_LOADED
 
 # PATH adjustments
-test -d "/usr/lib/ccache/bin" && PATH="/usr/lib/ccache/bin:$PATH"
-test -d "$HOME/usr/texlive/2014/bin/x86_64-linux" && PATH="$HOME/usr/texlive/2014/bin/x86_64-linux:$PATH"
-test -d "$HOME/usr/gcc-arm-none-eabi-4_8-2014q3/bin" && PATH="$HOME/usr/gcc-arm-none-eabi-4_8-2014q3/bin:$PATH"
-test -d "$HOME/bin" && PATH="$HOME/bin:$PATH"
+case $(hostname) in
+    *-mac) PATH='/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin' ;;
+esac
+path_prepend() { test -d "$1" && PATH="$1:$PATH" }
+path_prepend "/usr/lib/ccache/bin"
+path_prepend "$HOME/usr/texlive/2014/bin/x86_64-linux"
+#path_prepend "/usr/local/Cellar/ccache/3.2/libexec"
+path_prepend "$HOME/usr/gcc-arm-none-eabi-4_9-2014q4/bin"
+path_prepend "$HOME/bin"
 export PATH
 
-# locale
+# locale: default, overriden in zshrc for interctive shells
 LANG="fr_FR.UTF-8"
 LC_COLLATE="C"
 export LANG LC_COLLATE
