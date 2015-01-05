@@ -1,19 +1,31 @@
 # ~/.zshenv
-# executed by zsh for every single shell
+# sourced by zsh for every single shell
+#
 # /!\ MUST be sourceable by plain /bin/sh too! and with set -u too!
-
-# prevent this file from being loaded twice
-test -n "${ZSHENV_LOADED:-}" && return
-ZSHENV_LOADED="y"; export ZSHENV_LOADED
+# In addition to interactive shells, will be used by:
+# - cron jobs that need my usual environnement
+# - xprofile on boxes that run X
+#
+# /!\ should be idempotent!
+# can't use guards for that since PATH is reset by login shells (eg in tmux)
 
 # PATH adjustments
-case $(hostname) in
-    *-mac) PATH='/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin' ;;
-esac
-path_prepend() { test -d "$1" && PATH="$1:$PATH"; }
+path_prepend() {
+    test -d "$1" || return
+
+    PATH=$( printf "$PATH" | tr ':' '\n' | grep -v -F "$1" | tr '\n' ':' )
+    PATH="$1:${PATH%:}"
+}
+path_postpend() {
+    test -d "$1" || return
+
+    PATH=$( printf "$PATH" | tr ':' '\n' | grep -v -F "$1" | tr '\n' ':' )
+    PATH="${PATH%:}:$1"
+}
+test -d "/usr/local/Cellar" && path_prepend "/usr/local/bin"
+#path_prepend "/usr/local/Cellar/ccache/3.2/libexec"
 path_prepend "/usr/lib/ccache/bin"
 path_prepend "$HOME/usr/texlive/2014/bin/x86_64-linux"
-#path_prepend "/usr/local/Cellar/ccache/3.2/libexec"
 path_prepend "$HOME/usr/gcc-arm-none-eabi-4_9-2014q4/bin"
 path_prepend "$HOME/bin"
 export PATH
@@ -50,7 +62,7 @@ if [ -d "$HOME/tl" ]; then
     TLROOT="$TEXLIVE/trunk/Master"
     CTAN="$TEXLIVE/ctan"
     TEX_CATALOGUE="$TEXLIVE/catalogue/entries"
-    PATH="$PATH:$TLROOT/tlpkg/bin"
+    path_postpend "$TLROOT/tlpkg/bin"
     PERL5LIB="$TLROOT/tlpkg"
     export TEXLIVE TLROOT CTAN TEX_CATALOGUE PERL5LIB
 fi
