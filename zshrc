@@ -98,6 +98,20 @@ if [ "$TERM" != "dumb" ]; then
     esac
 fi
 
+# environment needed only for interactive shells
+if which less >/dev/null; then
+    PAGER="less"; export PAGER
+fi
+if which bc >/dev/null; then
+    BC_ENV_ARGS="-l -q"; export BC_ENV_ARGS
+fi
+if which vim >/dev/null; then
+    EDITOR="vim"
+else
+    EDITOR="vi"
+fi
+export EDITOR
+
 # switch to english locale: compiler messages in French, seriously?
 # Pick en_US.UTF-8 as opposed to POSIX for the sake of UTF-8
 # Keep dates in French.

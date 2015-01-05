@@ -35,20 +35,6 @@ LANG="fr_FR.UTF-8"
 LC_COLLATE="C"
 export LANG LC_COLLATE
 
-# misc
-if which less >/dev/null; then
-    PAGER="less"; export PAGER
-fi
-if which bc >/dev/null; then
-    BC_ENV_ARGS="-l -q"; export BC_ENV_ARGS
-fi
-if which vim >/dev/null; then
-    EDITOR="vim"
-else
-    EDITOR="vi"
-fi
-export EDITOR
-
 # For PolarSSL's compat.sh
 if which gnutls-cli >/dev/null; then
     GNUTLS_CLI=gnutls-cli
