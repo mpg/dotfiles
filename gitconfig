@@ -36,3 +36,5 @@
     lga         = log --graph --pretty=format:'%C(yellow)%h%Creset - %Cgreen%an %Cblue%ar%Creset: %s%C(yellow)%d%Creset' --abbrev-commit --date=relative
 
     review      = log --patch --reverse
+[core]
+    excludesfile = ~/.gitignore
