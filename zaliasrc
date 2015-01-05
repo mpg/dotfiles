@@ -1,12 +1,6 @@
-# ~/.aliasrc
+# ~/.zaliasrc
 # zsh aliases definitions, sourced from ~/.zshrc
 # (interactive shells only)
-#
-
-# colors
-alias ls="ls $AUTOCOLOR"
-alias grep="grep $AUTOCOLOR"
-alias egrep="egrep $AUTOCOLOR"
 
 # ls
 alias ll='ls -lh'

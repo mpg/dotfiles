@@ -87,15 +87,14 @@ esac
 # enable color support of ls & friends (see .zaliasrc)
 if [ "$TERM" != "dumb" ]; then
     zstyle ':completion:*:default' list-colors ''
-    case $(hostname) in
-        *-mac)
-            export CLICOLOR=YES
-            ;;
-        *)
-            eval "`dircolors -b`"
-            AUTOCOLOR='--color=auto'
-            ;;
-    esac
+
+    if ls --color=auto >/dev/null 2>&1; then
+        alias ls='ls --color=auto'
+    else
+        export CLICOLOR=1
+    fi
+    alias grep='grep --color=auto'
+    alias egrep='egrep --color=auto'
 fi
 
 # environment needed only for interactive shells
