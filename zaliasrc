@@ -14,37 +14,30 @@ alias -g ....='../../..'
 alias -g .....='../../../..'
 alias d='dirs -v'
 
-# vim-related stuff
-alias -s tex=vim
-alias -s dtx=vim
-alias -s html=vim
-alias -s vim=vim
-alias vims='vim -S'
-
 # powerful vim variants
-kvim() { kpsewhich      "$@" | medit }
-pvim() { pwhich         "$@" | medit }
-lvim() { locate         "$@" | medit }
-wvim() {
-    local res
-    local problem
-    res=$(which "$@")
-    problem=$?
-    if test $problem -ne 0; then
-        echo $res
-        return $problem
-    fi
-    echo $res | medit
-}
+if which medit >/dev/null; then
+    kvim() { kpsewhich      "$@" | medit }
+    pvim() { pwhich         "$@" | medit }
+    lvim() { locate         "$@" | medit }
+    wvim() {
+        local res
+        local problem
+        res=$(which "$@")
+        problem=$?
+        if test $problem -ne 0; then
+            echo $res
+            return $problem
+        fi
+        echo $res | medit
+    }
+fi
 
 # misc (from zsh-lovers)
 alias j='jobs'
 alias -g C='| wc -l'
 alias -g G='| egrep'
 alias -g L="| less"
-alias -g LV="| lview"
-alias -g LL="2>&1 | less"
-alias -g M='| most'
+alias -g LL='2>&1 | less'
 alias -g TL='| tail -20'
 alias -g T='| tail'
 alias -g H='| head'
@@ -52,8 +45,8 @@ alias -g HL='|& head -20'
 alias -g S='| sort'
 alias -g N='>/dev/null'
 alias -g DN='/dev/null'
-alias -g NE="2> /dev/null"
-alias -g NUL="> /dev/null 2>&1"
+alias -g NE='2>/dev/null'
+alias -g NUL='>/dev/null 2>&1'
 alias -g X0='| xargs -0'
 alias -g X='| xargs'
 
@@ -61,78 +54,91 @@ alias -g X='| xargs'
 alias mkdir='nocorrect mkdir'
 alias smv='noglob zmv -W'
 alias find='noglob find'
-alias locate='noglob locate'
-alias wget='noglob wget'
-alias youtube-dl='noglob youtube-dl'
+which wget N && alias wget='noglob wget'
+which locate N && alias locate='noglob locate'
+which youtube-dl N && alias youtube-dl='noglob youtube-dl'
 
 # misc
-alias qmv='qmv -f do'
+alias mpt='ssh -t thue mocp'
+which cdparanoia N && alias rip='cdparanoia -B'
+which qmv N && alias qmv='qmv -f do'
 alias du1="du -x -h --max-depth 1 . | grep -E '^([0-9]*M|[0-9,]*G)' "
-alias vnice='ionice -c3 nice'
+which ionice N && alias vnice='ionice -c3 nice'
 alias sgrep='grep -R --exclude-dir=.svn'
-alias tlcrit='tlmgr --repository=ftp://tug.org/texlive/tlcritical update --self'
-alias tlctb='tlmgr --repository=http://tlcontrib.metatex.org/2010'
-alias recordmydesktop='recordmydesktop --workdir ~/tmp'
-alias screencast='echo "*** ctrl-alt-s pour finir ***"; recordmydesktop --delay 5 --channels 1 --s_quality 0 --v_quality 16'
+alias ggrep='grep -R --exclude-dir=.git'
 alias -g GBA='$(git branch -a | sed '\''s/[* ]*\([^ ]*\).*/\1/'\'')'
-alias wakeup='echo "mocp -p" |'
-alias flac='flac --replay-gain --best'
-alias nc='nc -v -w3'
-alias dd='dcfldd'
+which mocp N && alias wakeup='echo "mocp -p" |'
+which flac N && alias flac='flac --replay-gain --best'
+which nc N && alias nc='nc -v -w3'
+which dd N && which dcfldd N && alias dd='dcfldd'
 
+# screencasts with recordmydesktop
+if which recordmydesktop N; then
+    alias recordmydesktop='recordmydesktop --workdir ~/tmp'
+    alias screencast='echo "*** ctrl-alt-s pour finir ***"; recordmydesktop --delay 5 --channels 1 --s_quality 0 --v_quality 16'
+fi
+
+# generate random password
 pwgen() {
     head -c ${1-8} /dev/urandom | base64
 }
 
-rfc() {
-    view ~/doc/rfcs/rfc$1.txt
-}
+# quick RFC access
+if [ -d ~/doc/rfcs ]; then
+    rfc() {
+        view ~/doc/rfcs/rfc$1.txt
+    }
+fi
 
-sound2wav() {
-    for f in "$@"; do
-        mplayer -quiet -vo null -vc null -ao pcm:file="${f%.*}".wav $f
-    done
-}
+# convert any sound to wav
+if which mplayer N; then
+    sound2wav() {
+        for f in "$@"; do
+            mplayer -quiet -vo null -vc null -ao pcm:file="${f%.*}".wav $f
+        done
+    }
+fi
 
-alias cal=_cal
-_cal() {
-    if [ $# -eq 0 ]; then
-        set -- -3
-    fi
-    \cal "$@"
-}
+# turn cal to cal -3 iby default if supported
+if cal -3 NUL; then
+    alias cal=_cal
+    _cal() {
+        if [ $# -eq 0 ]; then
+            set -- -3
+        fi
+        \cal "$@"
+    }
+fi
 
-pdf14() {
-    local out
-    case $# in
-        1)
-            out=${1%.pdf}-pdf14.pdf
-            ;;
-        2)
-            out=$2
-            ;;
-        *)
-            echo 'Usage: pdf14 infile [outfile]' 1>&2
-            return 1
-    esac
-    gs -o $out -sDEVICE=pdfwrite -dCompatibilityLevel=1.4 $1
-}
-
-# nicer texloganalyser
-tla() {
-    test x = "x$1" && { echo "Usage: tla <file.log>"; return }
-    texloganalyser -wou "$1" \
-        | sed 's/^\(\[[0-9]\+]\)*//' | grep --color '^.*\(box\|arning\)\>'
-}
+# convert to PDF 1.4 (some old printers don't support better)
+if which gs N; then
+    pdf14() {
+        local out
+        case $# in
+            1)
+                out=${1%.pdf}-pdf14.pdf
+                ;;
+            2)
+                out=$2
+                ;;
+            *)
+                echo 'Usage: pdf14 infile [outfile]' 1>&2
+                return 1
+        esac
+        gs -o $out -sDEVICE=pdfwrite -dCompatibilityLevel=1.4 $1
+    }
+fi
 
 # sshfs mounts
-smount () {
-    mkdir -p ~/$1
-    sshfs -o ro $1: ~/$1
-}
-sumount () {
-    fusermount -uz ~/$1
-}
+if which sshfs N && which fusermount N; then
+    smount () {
+        mkdir -p ~/$1
+        sshfs -o ro $1: ~/$1
+    }
+    sumount () {
+        fusermount -uz ~/$1
+    }
+fi
 
 # polarssl sync to thue
 alias psync='rsync -av --delete ~/src/polarssl/.git/ thue:polarssl/mpg.git/'
@@ -196,33 +202,6 @@ pcmake () {
 nox() { find $* \! -type d \! -type l -exec chmod a-x {} + }
 pub() { find $* \! -type l -exec chmod a+r {} + , -type d -exec chmod a+x {} + }
 
-# cleaning up after (La)TeX
-tc() {
-    setopt local_options nullglob
-    exts='.aux|.log|.dvi|.ps|.bbl|.out|.snm|.nav|.toc|.vrb|.blg|.glo|.idx|.mtc'
-    exts="$exts|.maf|.stc?|.mtc?|.ptc?|ilg|ind|-blx.bib|.svn|.vex|.exa|.out"
-    exts="$exts|.lot|.lof|.idx|.fdb_latexmk|.nlo|.nls|.run.xml|.fls"
-    stars='.'
-    if [[ $1 = "-r" ]]; then
-        stars='**'
-        shift
-    fi
-    basedir='.'
-    if [[ -n $1 ]]; then
-        basedir="$1"
-    fi
-    target=( $basedir/${~stars}/*(${~exts}) )
-    if [[ -n $target ]]; then
-        rm -- $target || return $?
-    fi
-    target=( $basedir/${~stars}/texput.* )
-    if [[ -n $target ]]; then
-        rm $target
-    fi
-}
-
-## trucs locaux
-
 # OS X stuff
 if which reattach-to-user-namespace >/dev/null; then
     alias vim='reattach-to-user-namespace vim'
@@ -236,113 +215,117 @@ if which aptitude >/dev/null; then
     alias dqw='dpkg-query -W -f='\''${Package;-40}${Version}\n'\'' | egrep'
 fi
 
-# misc
-alias mpt='ssh -t thue mocp'
-alias rip='cdparanoia -B'
-alias xfm='thunar' # cannot remember the name of my X file manager...
-alias gfm='thunar' # ... aka Graphical file manager
-
 # text to pdf
-t2p() {
-    paps $1 | ps2pdf - ${1%.txt}.pdf
-}
+if which paps N && which ps2pdf N; then
+    t2p() {
+        paps $1 | ps2pdf - ${1%.txt}.pdf
+    }
+fi
 
-xkpw() {
-    local dir=~/usr/xkcd-password
-    for i in $(seq 1 20); do
-        python $dir/xkcd-password.py -w $dir/pwords-fr.txt --min=3 --max=5
-    done
-}
+# xkcd password generation
+if [ -d ~/usr/xkcd-password ]; then
+    xkpw() {
+        local dir=~/usr/xkcd-password
+        for i in $(seq 1 20); do
+            python $dir/xkcd-password.py -w $dir/pwords-fr.txt --min=3 --max=5
+        done
+    }
+fi
 
 # count cycles with valgrind
-ccount() {
-    ( valgrind --tool=callgrind \
-        --dump-line=no --callgrind-out-file=/dev/null \
-        --collect-atstart=no --toggle-collect=main \
-        $1) 2>&1 | sed -n -e 's/.*refs: *\([0-9,]*\)/\1/p'
-}
+if which valgrind N; then
+    ccount() {
+        ( valgrind --tool=callgrind \
+            --dump-line=no --callgrind-out-file=/dev/null \
+            --collect-atstart=no --toggle-collect=main \
+            $1) 2>&1 | sed -n -e 's/.*refs: *\([0-9,]*\)/\1/p'
+    }
+fi
 
 # sml/nj
-alias sml='rlwrap sml'
-smlrun() {
-    echo 'use "'$1'";' | sml
-}
+if which sml N; then
+    which rlwrap N && alias sml='rlwrap sml'
+    smlrun() {
+        echo 'use "'$1'";' | sml
+    }
+fi
 
-# being god
-alias pacman='sudo pacmatic'
-alias systemctl='sudo systemctl'
-alias reboot='systemctl reboot'
-alias halt='systemctl poweroff'
-alias dobackup='sudo dobackup'
+# arch linux managment
+if which pacman N && which systemctl N; then
+    alias pacman='sudo pacmatic'
+    alias systemctl='sudo systemctl'
+fi
 
-# texmfhome management
-rmtexmfhome() {
-    local texmfhome=$(kpsewhich --var-value TEXMFHOME)
-    for pack in $@; do
-        find $texmfhome -type d -name $pack -exec rm -r {} +
-    done
-}
-lltxupdate() {
-    local sources=~/tex/packages
-    local texmfhome=$(kpsewhich --var-value TEXMFHOME)
-    for pack in $@; do
-        find $texmfhome -type d -name $pack -exec rm -r {} +
-        (cd $sources/$pack && make install TEXMFROOT=$texmfhome)
-    done
-}
-lstexmfhome() {
-    for dir in ~/texmf/tex/*/*; do
-        echo ${dir##*/}
-    done
-}
+# easy backup
+which dobackup N && alias dobackup='sudo dobackup'
 
-# usb
-usb() {
-    case "$1" in
-        on)     pmount /dev/sdb1        ;;
-        off)    pumount /dev/sdb1       ;;
-        *)      echo "Usage: usb (on|off)"
-    esac
-}
-usb='/media/sdb1'
-: ~usb
+if which latex N; then
+    # cleaning up after (La)TeX
+    tc() {
+        setopt local_options nullglob
+        exts='.aux|.log|.dvi|.ps|.bbl|.out|.snm|.nav|.toc|.vrb|.blg|.glo|.idx|.mtc'
+        exts="$exts|.maf|.stc?|.mtc?|.ptc?|ilg|ind|-blx.bib|.svn|.vex|.exa|.out"
+        exts="$exts|.lot|.lof|.idx|.fdb_latexmk|.nlo|.nls|.run.xml|.fls"
+        stars='.'
+        if [[ $1 = "-r" ]]; then
+            stars='**'
+            shift
+        fi
+        basedir='.'
+        if [[ -n $1 ]]; then
+            basedir="$1"
+        fi
+        target=( $basedir/${~stars}/*(${~exts}) )
+        if [[ -n $target ]]; then
+            rm -- $target || return $?
+        fi
+        target=( $basedir/${~stars}/texput.* )
+        if [[ -n $target ]]; then
+            rm $target
+        fi
+    }
 
-# network sound
-nsound() {
-    local name
-    name=~/.pulse/client.conf
-    case "$1" in
-        on)     ln -sf $name.thue $name     ;;
-        off)    ln -sf $name.local $name  ;;
-        *)      echo "Usage: nsound (on|off)"
-    esac
-}
+    # texmfhome management
+    rmtexmfhome() {
+        local texmfhome=$(kpsewhich --var-value TEXMFHOME)
+        for pack in $@; do
+            find $texmfhome -type d -name $pack -exec rm -r {} +
+        done
+    }
+    lstexmfhome() {
+        for dir in ~/texmf/tex/*/*; do
+            echo ${dir##*/}
+        done
+    }
+fi
 
-# texlive
-tll-ctan2 () { ctan2tl $1 >$TEXLIVE/p-$1.log }
-tll-place () { ctan2tl --place $1 >$TEXLIVE/p-$1.place }
-tll-ci ()
-{
-    svn ci \
-    $(cat /tmp/1000.tlplace.dirs) \
-    $TLROOT/tlpkg/bin/tlpkg-ctan-check \
-    $TLROOT/tlpkg/libexec/ctan2tds \
-    $@
-}
-tll-log ()
-{
-    if [[ -z $1 ]]; then 1=20; fi
-    svn log --limit $1 $TLROOT/.. | less
-}
+# texlive dev
+if [ -n "${TEXLIVE+x}" ]; then
+    tll-ctan2 () { ctan2tl $1 >$TEXLIVE/p-$1.log }
+    tll-place () { ctan2tl --place $1 >$TEXLIVE/p-$1.place }
+    tll-ci ()
+    {
+        svn ci \
+            $(cat /tmp/1000.tlplace.dirs) \
+            $TLROOT/tlpkg/bin/tlpkg-ctan-check \
+            $TLROOT/tlpkg/libexec/ctan2tds \
+            $@
+    }
+    tll-log ()
+    {
+        if [[ -z $1 ]]; then 1=20; fi
+        svn log --limit $1 $TLROOT/.. | less
+    }
 
-alias tll-db='tl-update-tlpdb --catalogue=$TEX_CATALOGUE/..'
-alias tll-net='tl-update-tlnet $TEXLIVE/mynet/tlnet'
+    alias tll-db='tl-update-tlpdb --catalogue=$TEX_CATALOGUE/..'
+    alias tll-net='tl-update-tlnet $TEXLIVE/mynet/tlnet'
 
-generic_ctan_cd () {
-    destination=$(tlpkginfo $1 $2)
-    if [[ -n $destination ]]; then cd $destination; fi
-}
-ccd () { generic_ctan_cd --ctan-dir $1 }
-ctd () { generic_ctan_cd --prepare $1 }
+    generic_ctan_cd () {
+        destination=$(tlpkginfo $1 $2)
+        if [[ -n $destination ]]; then cd $destination; fi
+    }
+    ccd () { generic_ctan_cd --ctan-dir $1 }
+    ctd () { generic_ctan_cd --prepare $1 }
+fi
 
 # vim: ft=zsh:
