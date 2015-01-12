@@ -202,11 +202,6 @@ pcmake () {
 nox() { find $* \! -type d \! -type l -exec chmod a-x {} + }
 pub() { find $* \! -type l -exec chmod a+r {} + , -type d -exec chmod a+x {} + }
 
-# OS X stuff
-if which reattach-to-user-namespace >/dev/null; then
-    alias vim='reattach-to-user-namespace vim'
-fi
-
 # debian stuff
 if which aptitude >/dev/null; then
     alias acs='apt-cache search'
