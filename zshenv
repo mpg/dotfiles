@@ -36,13 +36,6 @@ LANG="fr_FR.UTF-8"
 LC_COLLATE="C"
 export LANG LC_COLLATE
 
-# For PolarSSL's compat.sh
-if which gnutls-cli >/dev/null; then
-    GNUTLS_CLI=gnutls-cli
-    GNUTLS_SERV=gnutls-serv
-    export GNUTLS_CLI GNUTLS_SERV
-fi
-
 # TeX Live development
 if [ -d "$HOME/tl" ]; then
     TEXLIVE="$HOME/tl"
