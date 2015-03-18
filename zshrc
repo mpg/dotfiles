@@ -99,17 +99,20 @@ fi
 
 # environment needed only for interactive shells
 if which less >/dev/null; then
-    PAGER="less"; export PAGER
+    export PAGER="less"
 fi
+
 if which bc >/dev/null; then
-    BC_ENV_ARGS="-l -q"; export BC_ENV_ARGS
+    export BC_ENV_ARGS="-l -q"
 fi
+
 if which vim >/dev/null; then
-    EDITOR="vim"
+    export EDITOR="vim"
 else
-    EDITOR="vi"
+    export EDITOR="vi"
 fi
-export EDITOR
+
+export GCC_COLORS=yes
 
 # switch to english locale: compiler messages in French, seriously?
 # Pick en_US.UTF-8 as opposed to POSIX for the sake of UTF-8
