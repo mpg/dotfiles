@@ -251,6 +251,11 @@ if which pacman N && which systemctl N; then
     alias systemctl='sudo systemctl'
 fi
 
+# packages updates
+if which brew N; then
+    alias up='brew update && brew upgrade'
+fi
+
 # easy backup
 which dobackup N && alias dobackup='sudo dobackup'
 
