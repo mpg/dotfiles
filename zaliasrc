@@ -140,15 +140,15 @@ if which sshfs N && which fusermount N; then
     }
 fi
 
-# polarssl sync to thue
-alias psync='rsync -av --delete ~/src/polarssl/.git/ thue:polarssl/mpg.git/'
+# mbedtls sync to thue
+alias psync='rsync -av --delete ~/src/mbedtls/.git/ thue:mbedtls/mpg.git/'
 
-# polarssl cmake settings
+# mbedtls cmake settings
 pcmake () {
     local usage="Usage: [CC=clang] pcmake sb|deb|rel|cov|asan|dasan|mem|dmem|check|off"
 
     if [ -d library -a -d include -a -d tests ]; then :; else
-        echo "Must be run from polarssl root" >&2
+        echo "Must be run from mbedtls root" >&2
         return 1
     fi
 
