@@ -19,6 +19,21 @@ bindkey -v $terminfo[kdch1] vi-delete-char # fix 'del' key
 # help (man) in viins mode
 bindkey -v $terminfo[kf1] run-help
 
+# make esc-/ without a delay work
+vi-search-fix() {
+zle vi-cmd-mode
+zle .vi-history-search-backward
+}
+autoload vi-search-fix
+zle -N vi-search-fix
+bindkey -M viins '\e/' vi-search-fix
+
+# make delete commands for over start of insert
+bindkey "^?" backward-delete-char
+bindkey "^W" backward-kill-word
+bindkey "^H" backward-delete-char
+bindkey "^U" backward-kill-line
+
 # navigation options
 setopt auto_cd          # foo/bar = cd foo/bar
 setopt auto_pushd       # cd automatically pushes the old pwd
