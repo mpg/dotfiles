@@ -23,6 +23,7 @@ path_postpend() {
     PATH="${PATH%:}:$1"
 }
 test -d "/usr/local/Cellar" && path_prepend "/usr/local/bin"
+path_prepend "$HOME/usr/infer-osx-v0.1.0/infer/infer/bin"
 #path_prepend "/usr/local/Cellar/ccache/3.2/libexec"
 path_prepend "/usr/lib/ccache/bin"
 path_prepend "$HOME/usr/texlive/2014/bin/x86_64-linux"
