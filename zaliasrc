@@ -80,7 +80,7 @@ fi
 
 # generate random password
 pwgen() {
-    head -c ${1-8} /dev/urandom | base64
+    head -c ${1-10} /dev/urandom | base64
 }
 
 # quick RFC access
