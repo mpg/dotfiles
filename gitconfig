@@ -2,6 +2,11 @@
     name        = Manuel Pégourié-Gonnard
     email       = mpg2@elzevir.fr
 
+[core]
+    excludesfile = ~/.gitignore
+    abbrev      = 12
+[pretty]
+    fixes       = Fixes: %h (\"%s\")
 [color]
     ui          = auto
 [apply]
@@ -35,5 +40,3 @@
     lga         = log --abbrev-commit --graph --pretty=format:'%C(yellow)%h%Creset - %Cgreen%an %Cblue%ar%Creset: %s%C(yellow)%d%Creset'
 
     review      = log --patch --reverse
-[core]
-    excludesfile = ~/.gitignore
