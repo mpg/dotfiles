@@ -1,7 +1,7 @@
 # ~/.zshenv
 # sourced by zsh for every single shell
 #
-# /!\ MUST be sourceable by plain /bin/sh too! and with set -u too!
+# /!\ MUST be sourceable by plain /bin/sh too! and with set -eu too!
 # In addition to interactive shells, will be used by:
 # - cron jobs that need my usual environnement
 # - xprofile on boxes that run X
@@ -11,18 +11,18 @@
 
 # PATH adjustments
 path_prepend() {
-    test -d "$1" || return
-
-    PATH=$( printf "$PATH" | tr ':' '\n' | grep -v -F "$1" | tr '\n' ':' )
-    PATH="$1:${PATH%:}"
+    if [ -d "$1" ]; then
+        PATH=$( printf "$PATH" | tr ':' '\n' | grep -v -F "$1" | tr '\n' ':' )
+        PATH="$1:${PATH%:}"
+    fi
 }
 path_postpend() {
-    test -d "$1" || return
-
-    PATH=$( printf "$PATH" | tr ':' '\n' | grep -v -F "$1" | tr '\n' ':' )
-    PATH="${PATH%:}:$1"
+    if [ -d "$1" ]; then
+        PATH=$( printf "$PATH" | tr ':' '\n' | grep -v -F "$1" | tr '\n' ':' )
+        PATH="${PATH%:}:$1"
+    fi
 }
-test -d "/usr/local/Cellar" && path_prepend "/usr/local/bin"
+if [ -d "/usr/local/Cellar" ]; then path_prepend "/usr/local/bin"; fi
 path_prepend "$HOME/usr/infer-osx-v0.1.0/infer/infer/bin"
 #path_prepend "/usr/local/Cellar/ccache/3.2/libexec"
 path_prepend "/usr/lib/ccache/bin"
@@ -54,4 +54,6 @@ if [ -d "$HOME/texdoc/tl-checkout" ]; then
 fi
 
 # local additions not tracked in the git repo
-test -r "$HOME/.zenv-local" && . "$HOME/.zenv-local"
+if [ -r "$HOME/.zenv-local" ]; then
+    . "$HOME/.zenv-local"
+fi
