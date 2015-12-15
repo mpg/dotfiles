@@ -19,6 +19,9 @@ bindkey -v $terminfo[kdch1] vi-delete-char # fix 'del' key
 # help (man) in viins mode
 bindkey -v $terminfo[kf1] run-help
 
+# reduce delay after hitting <esc> from default 0.4s to 0.1s
+export KEYTIMEOUT=1
+
 # make esc-/ without a delay work
 vi-search-fix() {
 zle vi-cmd-mode
@@ -28,11 +31,18 @@ autoload vi-search-fix
 zle -N vi-search-fix
 bindkey -M viins '\e/' vi-search-fix
 
-# make delete commands for over start of insert
+# make delete commands work over start of insert
 bindkey "^?" backward-delete-char
 bindkey "^W" backward-kill-word
 bindkey "^H" backward-delete-char
 bindkey "^U" backward-kill-line
+
+# more "usual" mapping for searching history
+bindkey '^R' history-incremental-search-backward
+
+# quickly visit history without having to reach for the arrow keys
+bindkey '^P' up-history
+bindkey '^N' down-history
 
 # navigation options
 setopt auto_cd          # foo/bar = cd foo/bar
