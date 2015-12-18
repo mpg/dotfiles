@@ -245,12 +245,6 @@ if which sml N; then
     }
 fi
 
-# arch linux managment
-if which pacman N && which systemctl N; then
-    alias pacman='sudo pacmatic'
-    alias systemctl='sudo systemctl'
-fi
-
 # packages updates
 if which brew N; then
     alias up='brew update && brew upgrade'
