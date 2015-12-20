@@ -110,6 +110,16 @@ if cal -3 NUL; then
     }
 fi
 
+# make xpdf open multiple files quietly in the background
+if which xpdf NUL; then
+    alias xpdf=_xpdf
+    _xpdf() {
+        for i in "$@"; do
+            setsid \xpdf $i NUL
+        done
+    }
+fi
+
 # convert to PDF 1.4 (some old printers don't support better)
 if which gs N; then
     pdf14() {
