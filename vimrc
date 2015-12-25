@@ -100,6 +100,9 @@ com WALast r! ls ~/.wine/drive_c/Team17/Worms\ Armageddon/User/Games/
 " for tex syntax file (needs to be set early, ftplugin/tex comes too late)
 let g:tex_flavor = 'tex'
 
+" don't apply the Linux coding style to every C file
+let g:linuxsty_patterns = [ "linux" ]
+
 " prefered flavour of asm is nasm
 "let g:asmsyntax = "nasm"
 
