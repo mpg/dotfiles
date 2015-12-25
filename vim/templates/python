@@ -1,0 +1,12 @@
+#!/usr/bin/python3
+# coding: utf-8
+
+# Written by Manuel Pégourié-Gonnard, 2012. WTFPL v2.
+
+def main():
+    return
+
+
+# Standard boilerplate to call the main() function.
+if __name__ == '__main__':
+    main()
