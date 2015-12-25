@@ -1,6 +1,6 @@
 [user]
     name        = Manuel Pégourié-Gonnard
-    email       = mpg2@elzevir.fr
+    email       = mpg@elzevir.fr
 
 [core]
     excludesfile = ~/.gitignore
