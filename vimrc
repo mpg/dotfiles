@@ -4,8 +4,7 @@ syntax on
 colorscheme mpg
 
 " use pathogen to load bundles
-"call pathogen#runtime_append_all_bundles()
-filetype off
+execute pathogen#infect()
 
 " use filetypes
 filetype on
