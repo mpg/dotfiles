@@ -64,6 +64,10 @@ function s:LinuxFormatting()
 
     setlocal cindent
     setlocal cinoptions=:0,l1,t0,g0,(0
+
+    " mpg: disable list as seeing all tabs is annoying
+    " and mistakes are caught by checkpatch.pl anyway
+    setlocal nolist
 endfunction
 
 function s:LinuxKeywords()
