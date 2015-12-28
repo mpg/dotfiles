@@ -40,3 +40,5 @@
     lga         = log --abbrev-commit --graph --pretty=format:'%C(yellow)%h%Creset - %Cgreen%an %Cblue%ar%Creset: %s%C(yellow)%d%Creset'
 
     review      = log --patch --reverse
+[sendemail]
+	confirm = always
