@@ -24,7 +24,7 @@ path_postpend() {
 }
 path_prepend "/usr/lib/ccache/bin"
 path_prepend "$HOME/usr/texlive/2016/bin/x86_64-linux"
-path_prepend "$HOME/usr/arm-cortexa5-linux-uclibcgnueabihf"
+path_prepend "$HOME/usr/arm-cortexa5-linux-uclibcgnueabihf/bin"
 path_prepend "$HOME/bin"
 export PATH
 
