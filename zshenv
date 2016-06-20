@@ -22,12 +22,9 @@ path_postpend() {
         PATH="${PATH%:}:$1"
     fi
 }
-if [ -d "/usr/local/Cellar" ]; then path_prepend "/usr/local/bin"; fi
-path_prepend "$HOME/usr/infer-osx-v0.1.0/infer/infer/bin"
-#path_prepend "/usr/local/Cellar/ccache/3.2/libexec"
 path_prepend "/usr/lib/ccache/bin"
 path_prepend "$HOME/usr/texlive/2015/bin/x86_64-linux"
-for dir in "$HOME"/usr/*/bin; do path_prepend "$dir"; done; unset dir
+# for dir in "$HOME"/usr/*/bin; do path_prepend "$dir"; done; unset dir
 path_prepend "$HOME/bin"
 export PATH
 
