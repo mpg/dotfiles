@@ -4,7 +4,7 @@
 # /!\ MUST be sourceable by plain /bin/sh too! and with set -eu too!
 # In addition to interactive shells, will be used by:
 # - cron jobs that need my usual environnement
-# - xprofile on boxes that run X
+# - xinit on boxes that run X
 #
 # /!\ should be idempotent!
 # can't use guards for that since PATH is reset by login shells (eg in tmux)
@@ -23,8 +23,8 @@ path_postpend() {
     fi
 }
 path_prepend "/usr/lib/ccache/bin"
-path_prepend "$HOME/usr/texlive/2015/bin/x86_64-linux"
-# for dir in "$HOME"/usr/*/bin; do path_prepend "$dir"; done; unset dir
+path_prepend "$HOME/usr/texlive/2016/bin/x86_64-linux"
+path_prepend "$HOME/usr/arm-cortexa5-linux-uclibcgnueabihf"
 path_prepend "$HOME/bin"
 export PATH
 
