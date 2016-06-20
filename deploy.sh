@@ -34,3 +34,6 @@ FILES=$(ls | grep -v $MYNAME'\|'$README)
 for f in $FILES; do
     link $f
 done
+
+mkdir -p "$HOME"/.cache/vim/undofiles
+echo "vim undofiles directory created"
