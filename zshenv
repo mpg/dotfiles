@@ -50,8 +50,3 @@ if [ -d "$HOME/texdoc/tl-checkout" ]; then
     TEXDOCDEV="$HOME/texdoc/tl-checkout"
     export TEXDOCDEV
 fi
-
-# local additions not tracked in the git repo
-if [ -r "$HOME/.zenv-local" ]; then
-    . "$HOME/.zenv-local"
-fi
