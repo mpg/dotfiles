@@ -139,13 +139,6 @@ fi
 
 export GCC_COLORS=yes
 
-# switch to english locale: compiler messages in French, seriously?
-# Pick en_US.UTF-8 as opposed to POSIX for the sake of UTF-8
-# Keep dates in French.
-export LANG=en_US.UTF-8
-export LC_TIME=fr_FR.UTF-8
-export LC_COLLATE=C
-
 # load aliases
 if [[ -r ~/.zaliasrc ]]; then
     . ~/.zaliasrc

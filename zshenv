@@ -29,10 +29,14 @@ path_prepend "$HOME/.gem/ruby/2.1.0/bin"
 path_prepend "$HOME/bin"
 export PATH
 
-# locale: default, overriden in zshrc for interctive shells
-LANG="fr_FR.UTF-8"
+# locale: I prefer everything in English (esp. error messages)
+# Pick en_US.UTF-8 as opposed to POSIX for the sake of UTF-8
+# Keep dates in French cause my brain can't get used to MM/DD/YYYY
+# Sort things in a standard way.
+LANG="en_US.UTF-8"
+LC_TIME="fr_FR.UTF-8"
 LC_COLLATE="C"
-export LANG LC_COLLATE
+export LANG LC_TIME LC_COLLATE
 
 # TeX Live development
 if [ -d "$HOME/tl" ]; then
