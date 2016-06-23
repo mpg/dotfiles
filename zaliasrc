@@ -60,7 +60,6 @@ which youtube-dl N && alias youtube-dl='noglob youtube-dl'
 
 # misc
 alias mpt='ssh -t thue mocp'
-which cdparanoia N && alias rip='cdparanoia -B'
 which qmv N && alias qmv='qmv -f do'
 alias du1="du -x -h --max-depth 1 . | grep -E '^([0-9]*M|[0-9,]*G)' "
 which ionice N && alias vnice='ionice -c3 nice'
@@ -68,9 +67,28 @@ alias sgrep='grep -R --exclude-dir=.svn'
 alias ggrep='grep -R --exclude-dir=.git'
 alias -g GBA='$(git branch -a | sed '\''s/[* ]*\([^ ]*\).*/\1/'\'')'
 which mocp N && alias wakeup='echo "mocp -p" |'
-which flac N && alias flac='flac --replay-gain --best'
 which nc N && alias nc='nc -v -w3'
 which dd N && which dcfldd N && alias dd='dcfldd'
+
+# cd ripping
+if which cdparanoia N; then
+    rip () {
+        local ext=${1-ogg}
+
+        cdparanoia -B || return
+
+        for i in *.wav; do
+            local o=${i#track}
+            o=${o%.cdda.wav}.$ext
+            case $ext in
+                ogg)    oggenc -q5 -o $o $i;;
+                flac)   flac --best -o $o $i;;
+                mp3)    lame $i $o;;
+                *)      false;;
+            esac && rm $i
+        done
+    }
+fi
 
 # screencasts with recordmydesktop
 if which recordmydesktop N; then
