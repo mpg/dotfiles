@@ -255,14 +255,6 @@ if which sml N; then
     }
 fi
 
-# packages updates
-if which brew N; then
-    alias up='brew update && brew upgrade'
-fi
-
-# easy backup
-which dobackup N && alias dobackup='sudo dobackup'
-
 if which latex N; then
     # cleaning up after (La)TeX
     tc() {
