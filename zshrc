@@ -114,7 +114,7 @@ if [ "$TERM" != "dumb" ]; then
     zstyle ':completion:*:default' list-colors ''
 
     if ls --color=auto >/dev/null 2>&1; then
-        alias ls='ls --color=auto'
+        alias ls='ls --color=auto --quoting-style=literal'
     else
         export CLICOLOR=1
     fi
