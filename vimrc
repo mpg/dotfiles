@@ -144,19 +144,3 @@ endif
 
 " local
 set modeline
-
-" use hjkl instead
-nnoremap  <Up>     <NOP>
-nnoremap  <Down>   <NOP>
-nnoremap  <Left>   <NOP>
-nnoremap  <Right>  <NOP>
-
-" use ctrl-p ctrl-n instead
-cnoremap  <Up>     <NOP>
-cnoremap  <Down>   <NOP>
-
-" use ctrl-o or switch to normal mode instead
-inoremap  <Up>     <NOP>
-inoremap  <Down>   <NOP>
-inoremap  <Left>   <NOP>
-inoremap  <Right>  <NOP>
