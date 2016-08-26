@@ -273,6 +273,19 @@ if which sml N; then
     }
 fi
 
+# get total running time of a bunch of mp3 files
+if which mpg123 N; then
+    mp3total() {
+        local t=0
+        for i in "$@"; do
+            mpg123 -t $i 2>&1 | sed -n 's/^\[\([0-9]*\):\([0-9]*\)].*/\1 \2/p'
+        done | while read m s; do
+            t=$(( t + 60 * m + s ))
+        done
+        echo "$(( t / 3600 )):$(( (t % 3600) / 60 )):$(( t % 60 ))"
+    }
+fi
+
 if which latex N; then
     # cleaning up after (La)TeX
     tc() {
