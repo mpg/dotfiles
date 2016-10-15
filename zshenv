@@ -26,6 +26,7 @@ path_prepend "/usr/lib/ccache/bin"
 path_prepend "$HOME/usr/texlive/2016/bin/x86_64-linux"
 path_prepend "$HOME/usr/arm-cortexa5-linux-uclibcgnueabihf/bin"
 path_prepend "$HOME/.gem/ruby/2.1.0/bin"
+path_prepend "/usr/class/cs143/bin"
 path_prepend "$HOME/.local/bin"
 path_prepend "$HOME/bin"
 export PATH
