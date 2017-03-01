@@ -23,10 +23,12 @@ path_postpend() {
     fi
 }
 path_prepend "/usr/lib/ccache/bin"
+path_prepend "/usr/class/cs143/bin"
 path_prepend "$HOME/usr/texlive/2016/bin/x86_64-linux"
 path_prepend "$HOME/usr/arm-cortexa5-linux-uclibcgnueabihf/bin"
+path_prepend "$HOME/usr/gcc-arm-none-eabi-5_4-2016q3/bin"
+path_prepend "$HOME/usr/ARM_Compiler_5.06u3/bin"
 path_prepend "$HOME/.gem/ruby/2.1.0/bin"
-path_prepend "/usr/class/cs143/bin"
 path_prepend "$HOME/.local/bin"
 path_prepend "$HOME/bin"
 export PATH
@@ -55,4 +57,9 @@ fi
 if [ -d "$HOME/texdoc/tl-checkout" ]; then
     TEXDOCDEV="$HOME/texdoc/tl-checkout"
     export TEXDOCDEV
+fi
+
+# local additions
+if [ -r "$HOME/zshenv.local" ]; then
+    source "$HOME/zshenv.local"
 fi
