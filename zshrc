@@ -11,6 +11,7 @@ setopt hist_find_no_dups        # don't show duplicated events while searching
 setopt hist_ignore_dups # avoid duplicating the last event
 setopt extended_history # also save command's timestamps
 setopt hist_verify      # show history expansion before executing command
+setopt histignorespace  # <space>command -> not in history
 
 # vim rulz (see man zshle for bindkey)
 bindkey -v              # use vi keybindings for command-line editing
