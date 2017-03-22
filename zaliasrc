@@ -248,6 +248,7 @@ if which aptitude >/dev/null; then
     alias acw='apt-cache show'
     alias acp='apt-cache policy'
     alias dqw='dpkg-query -W -f='\''${Package;-40}${Version}\n'\'' | egrep'
+    alias up='sudo aptitude update && sudo aptitude upgrade'
 fi
 
 # text to pdf
