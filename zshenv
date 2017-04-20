@@ -23,6 +23,7 @@ path_postpend() {
     fi
 }
 path_prepend "/usr/lib/ccache/bin"
+path_prepend "/usr/lib/ccache"
 path_prepend "/usr/class/cs143/bin"
 path_prepend "$HOME/usr/texlive/2016/bin/x86_64-linux"
 path_prepend "$HOME/usr/arm-cortexa5-linux-uclibcgnueabihf/bin"
