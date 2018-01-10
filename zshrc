@@ -1,4 +1,4 @@
-# ~/.zshrc
+# /root/.zshrc
 # Executed by zsh for all interactive shells
 
 # history and history file settings
@@ -77,22 +77,13 @@ zstyle ':vcs_info:*' enable git svn hg
 zstyle ':vcs_info:(hg*|git*):*' check-for-changes true
 zstyle ':vcs_info:*' formats '%s|%b|%u%c'
 
-# color code by host for the prompt
-case $(hostname) in
-    dyson|e105273-mac)  host_color=green        ;;
-    thue|mordell)       host_color=yellow       ;;
-    *)                  host_color=white        ;;
-esac
-
 # custom color prompt
 setopt prompt_subst
 autoload -U colors; colors
 PROMPT='%(?..%{$fg[red]%}%?%{$fg[white]%} )\
-%{$terminfo[bold]$fg[blue]%}%n%{$terminfo[sgr0]%}@\
-%{$terminfo[bold]$fg['$host_color']%}%m%{$terminfo[sgr0]%} \
-%{$terminfo[bold]$fg[magenta]%}%~%{$terminfo[sgr0]%} %# '
+%{$terminfo[bold]$fg[red]%}%m%{$terminfo[sgr0]%}: \
+%{$terminfo[bold]$fg[green]%}%~%{$terminfo[sgr0]%} %# '
 RPROMPT=' %{$fg[magenta]%}${vcs_info_msg_0_}%{$terminfo[sgr0]%}'
-unset host_color
 
 # custom xterm/rxvt title
 case $TERM in (xterm*|rxvt*)
@@ -110,7 +101,7 @@ case $TERM in (xterm*|rxvt*)
     ;;
 esac
 
-# enable color support of ls & friends (see .zaliasrc)
+# enable color support of ls & friends
 if [ "$TERM" != "dumb" ]; then
     zstyle ':completion:*:default' list-colors ''
 
@@ -122,23 +113,6 @@ if [ "$TERM" != "dumb" ]; then
     alias grep='grep --color=auto'
     alias egrep='egrep --color=auto'
 fi
-
-# environment needed only for interactive shells
-if which less >/dev/null; then
-    export PAGER="less"
-fi
-
-if which bc >/dev/null; then
-    export BC_ENV_ARGS="-l -q"
-fi
-
-if which vim >/dev/null; then
-    export EDITOR="vim"
-else
-    export EDITOR="vi"
-fi
-
-export GCC_COLORS=yes
 
 # load aliases
 if [[ -r ~/.zaliasrc ]]; then
