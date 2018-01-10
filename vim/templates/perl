@@ -1,9 +1,0 @@
-#!/usr/bin/perl
-
-use warnings;
-use strict;
-
-use utf8;
-use open qw(:std utf8);
-
-# cursor: 8 del
