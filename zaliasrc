@@ -108,9 +108,14 @@ if which parec oggenc N; then
     }
 fi
 
-# generate random password
-pwgen() {
-    head -c ${1-10} /dev/urandom | base64
+# generate random password - base64 encoding
+pwgen64() {
+    head -c ${1-7} /dev/urandom | base64 | tr '+/' ',.' | sed 's/=*$//'
+}
+
+# generate random password - hex qwerty-awerty encoding
+pwgen16() {
+    head -c ${1-7} /dev/urandom | xxd -p | tr '0123456789abcdef' 'sdfghjklertyuiop'
 }
 
 # quick RFC access
