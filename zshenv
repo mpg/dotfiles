@@ -61,6 +61,6 @@ if [ -d "$HOME/texdoc/tl-checkout" ]; then
 fi
 
 # local additions
-if [ -r "$HOME/zshenv.local" ]; then
-    source "$HOME/zshenv.local"
+if [ -r "$HOME/.zshenv.local" ]; then
+    source "$HOME/.zshenv.local"
 fi
