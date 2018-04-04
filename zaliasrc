@@ -224,7 +224,7 @@ pcmake () {
         rm -f include/**/Makefile
         rm -f programs/*/Makefile
     fi
-    find . -name yotta -prune -o -iname '*cmake*' -not -name CMakeLists.txt -exec rm -rf {} \+
+    find . -name .git -prune -o -iname '*cmake*' -not -name CMakeLists.txt -exec rm -rf {} \+
     if [ -n "$mode" ]; then
         if git status | grep 'modified:.*/Makefile'; then
             echo "Refusing to overwrite modified Makefile"
