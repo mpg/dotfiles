@@ -304,6 +304,19 @@ if which mpg123 N; then
     }
 fi
 
+# get total running time of a bunch of ogg files
+if which ogginfo N; then
+    oggtotal() {
+        local t=0
+        for i in "$@"; do
+            ogginfo $i |  sed -n 's/Playback length: \([0-9]*\)m:\([0-9]*\)\..*/\1 \2/p'
+        done | while read m s; do
+            t=$(( t + 60 * m + s ))
+        done
+        echo "$(( t / 3600 )):$(( (t % 3600) / 60 )):$(( t % 60 ))"
+    }
+fi
+
 if which latex N; then
     # cleaning up after (La)TeX
     tc() {
