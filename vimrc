@@ -45,6 +45,9 @@ set list listchars=tab:¬·,trail:␣,nbsp:~
 set stl=%f%M%R%H%W\ \ %{&ft},%{&fenc},%{&ff}\ \ %LL%=\ U+%04B\ %8(%l,%c%V%)\ %4P
 set ls=2
 
+" single space after period when joining lines
+set nojoinspaces
+
 set textwidth=78
 
 set tabstop=8
