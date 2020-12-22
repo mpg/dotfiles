@@ -27,7 +27,7 @@ path_postpend() {
 path_prepend "/usr/class/cs143/bin"
 path_prepend "$HOME/usr/texlive/2016/bin/x86_64-linux"
 path_prepend "$HOME/usr/arm-cortexa5-linux-uclibcgnueabihf/bin"
-path_prepend "$HOME/usr/gcc-arm-none-eabi-5_4-2016q3/bin"
+path_prepend "$HOME/usr/gcc-arm-none-eabi-9-2020-q2-update/bin"
 path_prepend "$HOME/usr/ARM_Compiler_5.06u3/bin"
 path_prepend "$HOME/.gem/ruby/2.1.0/bin"
 path_prepend "$HOME/.local/bin"
