@@ -60,6 +60,9 @@ setopt interactive_comments # allow coments in interactive shells too
 setopt no_correct       # don't try to correct spelling of command
 setopt no_correct_all   # don't try to correct spelling of arguments
 
+# path for personal (completion) functions
+fpath=( ~/.zfunc "${fpath[@]}" )
+
 # load autocompletion features
 autoload -U compinit; compinit
 
