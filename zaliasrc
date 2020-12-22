@@ -185,64 +185,6 @@ if which sshfs N && which fusermount N; then
     }
 fi
 
-# mbedtls sync to thue
-alias psync='rsync -av --delete ~/src/mbedtls/.git/ thue:mbedtls/mpg.git/'
-
-# mbedtls cmake settings
-pcmake () {
-    local usage="Usage: [CC=clang] pcmake sb|deb|rel|cov|asan|dasan|mem|dmem|check|off"
-
-    if [ -d library -a -d include -a -d tests ]; then :; else
-        echo "Must be run from mbedtls root" >&2
-        return 1
-    fi
-
-    local mode=""
-    local pre=""
-    local cc=""
-
-    if [ "x$CC" = "x" ]; then cc=cclang; else cc=$CC; fi
-
-    case "$1" in
-        deb)    mode="Debug"                    ;;
-        rel)    mode="Release"                  ;;
-        cov)    mode="Coverage"; cc=gcc         ;;
-        asan)   mode="ASan"                     ;;
-        dasan)  mode="ASanDbg"                  ;;
-        mem)    mode="MemSan"                   ;;
-        dmem)   mode="MemSanDbg"                ;;
-        check)  mode="Check"                    ;;
-        sb)     mode="Debug"; pre="scan-build"  ;;
-        off)                                    ;;
-        *)      echo "$usage" >&2; return 1     ;;
-    esac
-
-    echo "Cleaning built files..."
-    make clean
-    echo "Cleaning cmake files..."
-    if [ -f include/Makefile ]; then
-        rm -f include/**/Makefile
-        rm -f programs/*/Makefile
-    fi
-    find . -name .git -prune -o -iname '*cmake*' -not -name CMakeLists.txt -exec rm -rf {} \+
-    if [ -n "$mode" ]; then
-        if git status | grep 'modified:.*/Makefile'; then
-            echo "Refusing to overwrite modified Makefile"
-            return 1
-        fi
-        echo "Generating cmake files..."
-        CC=$cc $pre cmake -D CMAKE_BUILD_TYPE="$mode" .
-        echo "Protecting cmake Makefiles from git..."
-        git update-index --skip-worktree {.,library,programs,tests}/Makefile
-    else
-        echo "Unprotecting cmake Makefiles from git..."
-        git update-index --no-skip-worktree {.,library,programs,tests}/Makefile
-        echo "Restoring repository Makefiles..."
-        git checkout -- {.,library,programs,tests}/Makefile
-    fi
-    echo "Done."
-}
-
 # managing permissions
 nox() { find $* \! -type d \! -type l -exec chmod a-x {} + }
 pub() { find $* \! -type l -exec chmod a+r {} + , -type d -exec chmod a+x {} + }
