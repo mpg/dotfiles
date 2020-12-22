@@ -9,8 +9,6 @@
     fixes       = Fixes: %h (\"%s\")
 [color]
     ui          = auto
-[apply]
-    whitespace  = fix
 [merge]
     tool        = vimdiff
     summary     = true
@@ -20,9 +18,7 @@
 [diff]
     renames     = true
     submodule   = log
-    algorithm = patience
-[rerere]
-    enabled     = 1
+    algorithm   = histogram
 
 [alias]
     unstage     = reset HEAD
@@ -39,8 +35,11 @@
     lgl         = log --abbrev-commit         --pretty=format:'%C(yellow)%h%Creset %Cblue%ar%Creset: %s%C(yellow)%d%Creset'
     lg          = log --abbrev-commit --graph --pretty=format:'%C(yellow)%h%Creset %Cblue%ar%Creset: %s%C(yellow)%d%Creset'
     lga         = log --abbrev-commit --graph --pretty=format:'%C(yellow)%h%Creset - %Cgreen%an %Cblue%ar%Creset: %s%C(yellow)%d%Creset'
+    lgo         = log --abbrev-commit         --pretty=oneline
 
     review      = log --patch --reverse
 
 [sendemail]
     confirm = always
+[submodule]
+	recurse = true
