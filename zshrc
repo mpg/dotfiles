@@ -82,8 +82,8 @@ zstyle ':vcs_info:*' formats '%s|%b|%u%c'
 
 # color code by host for the prompt
 case $(hostname) in
-    dyson|e105273-mac)  host_color=green        ;;
-    thue|mordell)       host_color=yellow       ;;
+    dyson|siegel)       host_color=green        ;;
+    thue|thue2|mordell) host_color=yellow       ;;
     *)                  host_color=white        ;;
 esac
 
