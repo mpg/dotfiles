@@ -60,6 +60,11 @@ if [ -d "$HOME/texdoc/tl-checkout" ]; then
     export TEXDOCDEV
 fi
 
+# local rustup install
+if [ -r "$HOME/.cargo/env" ]; then
+    source "$HOME/.cargo/env"
+fi
+
 # local additions
 if [ -r "$HOME/.zshenv.local" ]; then
     source "$HOME/.zshenv.local"
