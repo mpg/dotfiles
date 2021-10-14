@@ -190,7 +190,7 @@ nox() { find $* \! -type d \! -type l -exec chmod a-x {} + }
 pub() { find $* \! -type l -exec chmod a+r {} + , -type d -exec chmod a+x {} + }
 
 # debian stuff
-if which aptitude >/dev/null; then
+if which apt >/dev/null; then
     alias acs='apt-cache search'
     alias acw='apt-cache show'
     alias acp='apt-cache policy'
