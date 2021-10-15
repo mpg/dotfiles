@@ -58,9 +58,14 @@ which wget N && alias wget='noglob wget'
 which locate N && alias locate='noglob locate'
 which youtube-dl N && alias youtube-dl='noglob youtube-dl'
 
-# keyboard setting
-alias azerty='setxkbmap $( cat ~/.Xkbmap )'
-alias qwerty='setxkbmap -layout fr -option'
+# old keyboard settings
+# now using:
+# - dconf-editor org.gnome.desktop.input-sources
+#   - sources: [('xkb', 'us'), ('xkb', 'ara+digits'), ('xkb', 'fr')]
+#   - xkb-options: ['caps:ctrl_modifier', 'compose:102']
+# - plus super-space for switching in keyboard shortcuts
+#alias azerty='setxkbmap $( cat ~/.Xkbmap )'
+#alias qwerty='setxkbmap -layout fr -option'
 
 # misc
 alias mpt='ssh -t thue mocp'
