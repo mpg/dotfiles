@@ -62,7 +62,7 @@ setopt no_correct       # don't try to correct spelling of command
 setopt no_correct_all   # don't try to correct spelling of arguments
 
 # path for personal (completion) functions
-fpath=( ~/.zfunc "${fpath[@]}" )
+fpath+=~/.zfunc
 mkdir -p ~/.zfunc
 
 # get completion for rustup and cargo
