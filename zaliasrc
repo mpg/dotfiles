@@ -337,7 +337,11 @@ fi
 which wmctrl N && alias fullscreen='wmctrl -r :ACTIVE: -b toggle,fullscreen'
 
 # unzip archives created on Windows with Arabic file names
-which unzip N && alias waunzip'unzip -O cp720'
+which unzip N && alias waunzip='unzip -O cp720'
+
+# audacity not working well with wayland yet
+# https://github.com/audacity/audacity/issues/459
+which audaticy N && alias audacity='GDK_BACKEND=x11 audacity'
 
 # avoid annoying error code on startup when last test was negative
 true
