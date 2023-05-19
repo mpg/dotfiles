@@ -23,8 +23,6 @@ path_postpend() {
     fi
 }
 path_prepend "/usr/lib/ccache"
-path_prepend "/usr/class/cs143/bin"
-path_prepend "$HOME/usr/texlive/2016/bin/x86_64-linux"
 path_prepend "$HOME/usr/arm-cortexa5-linux-uclibcgnueabihf/bin"
 path_prepend "$HOME/usr/gcc-arm-none-eabi-9-2020-q2-update/bin"
 path_prepend "$HOME/usr/ARM_Compiler_5.06u3/bin"
@@ -35,13 +33,13 @@ path_prepend "$HOME/bin"
 export PATH
 
 # locale: I prefer everything in English (esp. error messages)
-# Pick en_US.UTF-8 as opposed to POSIX for the sake of UTF-8
-# Keep dates in French cause my brain can't get used to MM/DD/YYYY
+# Pick en_GB.UTF-8 as opposed to POSIX for the sake of UTF-8
+# Pick GB rather than US for the sake of dates
 # Sort things in a standard way.
-LANG="en_US.UTF-8"
-LC_TIME="fr_FR.UTF-8"
+LANGUAGE=en
+LANG="en_GB.UTF-8"
 LC_COLLATE="C"
-export LANG LC_TIME LC_COLLATE
+export LANGUAGE LANG LC_COLLATE
 
 # TeX Live development
 if [ -d "$HOME/tl" ]; then
