@@ -62,6 +62,13 @@ setopt no_correct_all   # don't try to correct spelling of arguments
 
 # path for personal (completion) functions
 fpath=( ~/.zfunc "${fpath[@]}" )
+mkdir -p ~/.zfunc
+
+# get completion for rustup and cargo
+if command -v rustup >/dev/null; then
+    [ -e ~/.zfunc/_cargo  ] || rustup completions zsh cargo > ~/.zfunc/_cargo
+    [ -e ~/.zfunc/_rustup ] || rustup completions zsh rustup> ~/.zfunc/_rustup
+fi
 
 # load autocompletion features
 autoload -U compinit; compinit
