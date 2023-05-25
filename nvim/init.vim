@@ -1,10 +1,7 @@
 set fileencodings=utf8,latin1
 
 syntax on
-colorscheme mpg
-
-" use pathogen to load bundles
-execute pathogen#infect()
+"colorscheme mpg
 
 " use filetypes
 filetype on
@@ -36,7 +33,7 @@ if has("autocmd")
 endif
 
 " persistent undo
-set undofile undodir=~/.cache/vim/undofiles,.
+set undofile
 
 " display special chars in a special way
 set list listchars=tab:¬·,trail:␣,nbsp:~

@@ -39,4 +39,5 @@ done
 link $NVIM $HOME/.config/$NVIM
 
 mkdir -p "$HOME"/.cache/vim/undofiles
-echo "vim undofiles directory created"
+mkdir -p ~/.local/share/nvim/undo
+echo "(n)vim undofiles directories created"
