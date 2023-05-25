@@ -1,7 +1,7 @@
 set fileencodings=utf8,latin1
 
 syntax on
-"colorscheme mpg
+colorscheme mpg
 
 " use filetypes
 filetype on
