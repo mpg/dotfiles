@@ -19,13 +19,15 @@
     renames     = true
     submodule   = log
     algorithm   = histogram
+    colormoved  = dimmed-zebra
+    colormovedws = allow-indentation-change
 
 [alias]
     unstage     = reset HEAD
     subject     = log -1 --format=%s
 
-    fixup       = !sh -c 'git commit -m\"fixup! $(git subject $1)\"' -
-    squash      = !sh -c 'git commit -e -m\"squash! $(git subject $1)\"' -
+    fixup       = commit --fixup
+    squash      = commit --squash
     ria         = rebase -i --autosquash
 
     isclean     = !sh -c '! git status --porcelain | grep .'
@@ -42,4 +44,4 @@
 [sendemail]
     confirm = always
 [submodule]
-	recurse = true
+    recurse = true
