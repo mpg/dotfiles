@@ -200,7 +200,7 @@ if which apt >/dev/null; then
     alias acw='apt-cache show'
     alias acp='apt-cache policy'
     alias dqw='dpkg-query -W -f='\''${Package;-40}${Version}\n'\'' | egrep'
-    alias up='sudo apt update && sudo apt upgrade && sudo apt autoremove && sudo apt autoclean'
+    alias up='sudo apt autoremove --purge && sudo apt update && sudo apt upgrade && sudo apt autoremove --purge && sudo apt autoclean'
 fi
 
 # text to pdf
