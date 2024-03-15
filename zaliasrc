@@ -343,6 +343,14 @@ which unzip N && alias waunzip='unzip -O cp720'
 # https://github.com/audacity/audacity/issues/459
 which audaticy N && alias audacity='GDK_BACKEND=x11 audacity'
 
+# create new worktree to review a PR
+git-wta () {
+    git worktree add $@ && cd $1
+}
+review-pr () {
+    git-wta ../$1 public/pr/$1
+}
+
 # avoid annoying error code on startup when last test was negative
 true
 

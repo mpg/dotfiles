@@ -34,6 +34,10 @@
     rebase      = !sh -c 'git isclean && git rebase' -
     virgin      = !sh -c 'git isclean && git symbolic-ref HEAD refs/heads/$1 && rm .git/index && git clean -fdx' -
 
+    wtrm        = "!f() { git worktree remove         $1 && git branch -d $1; }; f"
+    wtrmd       = "!f() { git worktree remove         $1 && git branch -D $1; }; f"
+    wtrmf       = "!f() { git worktree remove --force $1 && git branch -D $1; }; f"
+
     lgl         = log --abbrev-commit         --pretty=format:'%C(yellow)%h%Creset %Cblue%ar%Creset: %s%C(yellow)%d%Creset'
     lg          = log --abbrev-commit --graph --pretty=format:'%C(yellow)%h%Creset %Cblue%ar%Creset: %s%C(yellow)%d%Creset'
     lga         = log --abbrev-commit --graph --pretty=format:'%C(yellow)%h%Creset - %Cgreen%an %Cblue%ar%Creset: %s%C(yellow)%d%Creset'
