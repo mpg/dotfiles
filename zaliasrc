@@ -352,6 +352,22 @@ review-pr () {
     git-wta $1 public/pr/$1
 }
 
+if which exercism N; then
+    exercism() {
+        if [ "$1" = submit ]; then
+            if ../check.sh; then
+                command exercism "$@"
+            else
+                echo "../check.sh failed"
+            fi
+        elif [ "$1" = download ]; then
+            cd $(command exercism "$@" | tail -n1)
+        else
+            command exercism "$@"
+        fi
+    }
+fi
+
 # avoid annoying error code on startup when last test was negative
 true
 
