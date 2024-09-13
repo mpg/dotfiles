@@ -345,10 +345,11 @@ which audaticy N && alias audacity='GDK_BACKEND=x11 audacity'
 
 # create new worktree to review a PR
 git-wta () {
-    git worktree add $@ && cd $1
+    local dir="../$1"; shift
+    git worktree add $dir "$@" && cd $dir
 }
 review-pr () {
-    git-wta ../$1 public/pr/$1
+    git-wta $1 public/pr/$1
 }
 
 # avoid annoying error code on startup when last test was negative
