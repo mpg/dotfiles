@@ -30,7 +30,6 @@ path_prepend "$HOME/usr/ARM_Compiler_5.06u3/bin"
 path_prepend "$HOME/usr/uncrustify-0.75.1/bin"
 path_prepend "$HOME/usr/git-2.43/bin"
 path_prepend "$HOME/usr/nvim-linux64/bin"
-path_prepend "$HOME/.gem/ruby/2.1.0/bin"
 path_prepend "$HOME/.local/bin"
 path_prepend "$HOME/bin"
 export PATH
@@ -43,23 +42,6 @@ LANGUAGE=en
 LANG="en_GB.UTF-8"
 LC_COLLATE="C"
 export LANGUAGE LANG LC_COLLATE
-
-# TeX Live development
-if [ -d "$HOME/tl" ]; then
-    TEXLIVE="$HOME/tl"
-    TLROOT="$TEXLIVE/trunk/Master"
-    CTAN="$TEXLIVE/ctan"
-    TEX_CATALOGUE="$TEXLIVE/catalogue/entries"
-    path_postpend "$TLROOT/tlpkg/bin"
-    PERL5LIB="$TLROOT/tlpkg"
-    export TEXLIVE TLROOT CTAN TEX_CATALOGUE PERL5LIB
-fi
-
-# texdoc dev
-if [ -d "$HOME/texdoc/tl-checkout" ]; then
-    TEXDOCDEV="$HOME/texdoc/tl-checkout"
-    export TEXDOCDEV
-fi
 
 # local rustup install
 if [ -r "$HOME/.cargo/env" ]; then

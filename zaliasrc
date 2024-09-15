@@ -14,24 +14,6 @@ alias -g ....='../../..'
 alias -g .....='../../../..'
 alias d='dirs -v'
 
-# powerful vim variants
-if which medit >/dev/null; then
-    kvim() { kpsewhich      "$@" | medit }
-    pvim() { pwhich         "$@" | medit }
-    lvim() { locate         "$@" | medit }
-    wvim() {
-        local res
-        local problem
-        res=$(which "$@")
-        problem=$?
-        if test $problem -ne 0; then
-            echo $res
-            return $problem
-        fi
-        echo $res | medit
-    }
-fi
-
 # misc (from zsh-lovers)
 alias j='jobs'
 alias -g C='| wc -l'
@@ -68,15 +50,11 @@ which youtube-dl N && alias youtube-dl='noglob youtube-dl'
 #alias qwerty='setxkbmap -layout fr -option'
 
 # misc
-alias mpt='ssh -t thue mocp'
 which qmv N && alias qmv='qmv -f do'
 alias du1="du -x -h --max-depth 1 . | grep -E '^([0-9]*M|[0-9,]*G)' "
 which ionice N && alias vnice='ionice -c3 nice'
-alias sgrep='grep -R --exclude-dir=.svn'
-alias ggrep='grep -R --exclude-dir=.git'
 alias -g GBA='$(git branch -a | sed '\''s/[* ]*\([^ ]*\).*/\1/'\'')'
 which mocp N && alias wakeup='echo "mocp -p" |'
-which nc N && alias nc='nc -v -w3'
 which dd N && which dcfldd N && alias dd='dcfldd'
 
 # cd ripping
@@ -139,27 +117,6 @@ if which mplayer N; then
     }
 fi
 
-# turn cal to cal -3 iby default if supported
-if cal -3 NUL; then
-    alias cal=_cal
-    _cal() {
-        if [ $# -eq 0 ]; then
-            set -- -3
-        fi
-        \cal "$@"
-    }
-fi
-
-# make xpdf open multiple files quietly in the background
-if which xpdf NUL; then
-    alias xpdf=_xpdf
-    _xpdf() {
-        for i in "$@"; do
-            setsid \xpdf $i NUL
-        done
-    }
-fi
-
 # convert to PDF 1.4 (some old printers don't support better)
 if which gs N; then
     pdf14() {
@@ -207,16 +164,6 @@ fi
 if which paps N && which ps2pdf N; then
     t2p() {
         paps $1 | ps2pdf - ${1%.txt}.pdf
-    }
-fi
-
-# xkcd password generation
-if [ -d ~/usr/xkcd-password ]; then
-    xkpw() {
-        local dir=~/usr/xkcd-password
-        for i in $(seq 1 20); do
-            python $dir/xkcd-password.py -w $dir/pwords-fr.txt --min=3 --max=5
-        done
     }
 fi
 
@@ -303,38 +250,6 @@ if which latex N; then
         done
     }
 fi
-
-# texlive dev
-if [ -n "${TEXLIVE+x}" ]; then
-    tll-ctan2 () { ctan2tl $1 >$TEXLIVE/p-$1.log }
-    tll-place () { ctan2tl --place $1 >$TEXLIVE/p-$1.place }
-    tll-ci ()
-    {
-        svn ci \
-            $(cat /tmp/1000.tlplace.dirs) \
-            $TLROOT/tlpkg/bin/tlpkg-ctan-check \
-            $TLROOT/tlpkg/libexec/ctan2tds \
-            $@
-    }
-    tll-log ()
-    {
-        if [[ -z $1 ]]; then 1=20; fi
-        svn log --limit $1 $TLROOT/.. | less
-    }
-
-    alias tll-db='tl-update-tlpdb --catalogue=$TEX_CATALOGUE/..'
-    alias tll-net='tl-update-tlnet $TEXLIVE/mynet/tlnet'
-
-    generic_ctan_cd () {
-        destination=$(tlpkginfo $1 $2)
-        if [[ -n $destination ]]; then cd $destination; fi
-    }
-    ccd () { generic_ctan_cd --ctan-dir $1 }
-    ctd () { generic_ctan_cd --prepare $1 }
-fi
-
-# make the current (terminal) window fullscreen
-which wmctrl N && alias fullscreen='wmctrl -r :ACTIVE: -b toggle,fullscreen'
 
 # unzip archives created on Windows with Arabic file names
 which unzip N && alias waunzip='unzip -O cp720'
