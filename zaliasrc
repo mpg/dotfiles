@@ -283,6 +283,11 @@ if which exercism N; then
     }
 fi
 
+dodo () {
+    sleep ${1:-30}m
+    systemctl suspend || (sleep 5m; systemctl suspend)
+}
+
 # avoid annoying error code on startup when last test was negative
 true
 
