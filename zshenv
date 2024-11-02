@@ -30,9 +30,15 @@ path_prepend "$HOME/usr/ARM_Compiler_5.06u3/bin"
 path_prepend "$HOME/usr/uncrustify-0.75.1/bin"
 path_prepend "$HOME/usr/git-2.43/bin"
 path_prepend "$HOME/usr/nvim-linux64/bin"
+path_prepend "$HOME/usr/groovy-4.0.23/bin"
 path_prepend "$HOME/.local/bin"
 path_prepend "$HOME/bin"
 export PATH
+
+if [ -d "$HOME/groovy-4.0.23" ]; then
+    GROOVY_HOME="$HOME/groovy-4.0.23"
+    export GROOVY_HOME
+fi
 
 # locale: I prefer everything in English (esp. error messages)
 # Pick en_GB.UTF-8 as opposed to POSIX for the sake of UTF-8
