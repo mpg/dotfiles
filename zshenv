@@ -51,10 +51,10 @@ export LANGUAGE LANG LC_COLLATE
 
 # local rustup install
 if [ -r "$HOME/.cargo/env" ]; then
-    source "$HOME/.cargo/env"
+    . "$HOME/.cargo/env"
 fi
 
 # local additions
 if [ -r "$HOME/.zshenv.local" ]; then
-    source "$HOME/.zshenv.local"
+    . "$HOME/.zshenv.local"
 fi
