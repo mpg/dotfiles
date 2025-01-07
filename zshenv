@@ -30,11 +30,6 @@ path_prepend "$HOME/.local/bin"
 path_prepend "$HOME/bin"
 export PATH
 
-if [ -d "$HOME/groovy-4.0.23" ]; then
-    GROOVY_HOME="$HOME/groovy-4.0.23"
-    export GROOVY_HOME
-fi
-
 # locale: I prefer everything in English (esp. error messages)
 # Pick en_GB.UTF-8 as opposed to POSIX for the sake of UTF-8
 # Pick GB rather than US for the sake of dates
