@@ -100,4 +100,20 @@ require("lazy").setup({
             vim.api.nvim_set_hl(0, 'LspSignatureActiveParameter', { fg = marked.fg, bg = marked.bg, ctermfg = marked.ctermfg, ctermbg = marked.ctermbg, bold = true })
         end
     },
+    -- LSP
+    {
+        'neovim/nvim-lspconfig',
+        config = function()
+            -- Setup language servers.
+            local lspconfig = require('lspconfig')
+
+            -- Rust
+            lspconfig.rust_analyzer.setup {
+                -- Server-specific settings. See `:help lspconfig-setup`
+                settings = {
+                    ['rust-analyzer'] = {},
+                }
+            }
+        end
+    },
 })
