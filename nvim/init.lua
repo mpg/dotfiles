@@ -100,6 +100,8 @@ require("lazy").setup({
             vim.api.nvim_set_hl(0, 'LspSignatureActiveParameter', { fg = marked.fg, bg = marked.bg, ctermfg = marked.ctermfg, ctermbg = marked.ctermbg, bold = true })
         end
     },
+    -- Git
+    { 'tpope/vim-fugitive' },
     -- LSP
     {
         'neovim/nvim-lspconfig',
