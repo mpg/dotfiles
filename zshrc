@@ -143,7 +143,10 @@ if which bc >/dev/null; then
     export BC_ENV_ARGS="-l -q"
 fi
 
-if which vim >/dev/null; then
+if which nvim >/dev/null; then
+    export EDITOR="nvim"
+    alias vim="nvim"
+elif which vim >/dev/null; then
     export EDITOR="vim"
 else
     export EDITOR="vi"
