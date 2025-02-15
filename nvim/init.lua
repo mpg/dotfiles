@@ -92,19 +92,13 @@ vim.opt.rtp:prepend(lazypath)
 require("lazy").setup({
     -- main color scheme
     {
-        "wincent/base16-nvim",
+        'sainnhe/gruvbox-material',
         lazy = false, -- load at start
         priority = 1000, -- load first
         config = function()
-            vim.cmd.colorscheme('gruvbox-dark-hard')
-            vim.o.background = 'dark'
-            vim.cmd('hi Normal ctermbg=none guibg=none')
-            -- Make comments more prominent -- they are important.
-            local bools = vim.api.nvim_get_hl(0, { name = 'Boolean' })
-            vim.api.nvim_set_hl(0, 'Comment', bools)
-            -- Make it clearly visible which argument we're at.
-            local marked = vim.api.nvim_get_hl(0, { name = 'PMenu' })
-            vim.api.nvim_set_hl(0, 'LspSignatureActiveParameter', { fg = marked.fg, bg = marked.bg, ctermfg = marked.ctermfg, ctermbg = marked.ctermbg, bold = true })
+            -- see :help gruvbox-material
+            vim.g.gruvbox_material_transparent_background = true
+            vim.cmd.colorscheme('gruvbox-material')
         end
     },
     -- Git
