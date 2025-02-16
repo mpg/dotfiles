@@ -34,7 +34,7 @@ vim.g.mapleader = " "
 
 -- Rust: see :help rust
 vim.g.rustfmt_autosave = 1
-vim.g.rustfmt_fail_silently = 1
+--vim.g.rustfmt_fail_silently = 1
 
 -- Shortcuts
 -- ---------
@@ -92,14 +92,39 @@ vim.opt.rtp:prepend(lazypath)
 require("lazy").setup({
     -- main color scheme
     {
+        --[[
         'sainnhe/gruvbox-material',
         lazy = false, -- load at start
         priority = 1000, -- load first
         config = function()
             -- see :help gruvbox-material
             vim.g.gruvbox_material_transparent_background = true
+            vim.g.gruvbox_material_foreground = 'original' -- mix, material
             vim.cmd.colorscheme('gruvbox-material')
         end
+        --]]
+        --[[
+        "rebelot/kanagawa.nvim",
+        lazy = false, -- load at start
+        priority = 1000, -- load first
+        config = function()
+            require('kanagawa').setup({
+                transparent = true,
+            })
+            vim.cmd.colorscheme('kanagawa-wave') -- -dragon (low contrast)
+        end
+        --]]
+        -- [[
+        "savq/melange-nvim",
+        lazy = false, -- load at start
+        priority = 1000, -- load first
+        config = function()
+            vim.opt.termguicolors = true
+            vim.cmd.colorscheme('melange')
+            vim.api.nvim_set_hl(0, "Normal", { bg = "NONE" })
+            vim.api.nvim_set_hl(0, "NormalNC", { bg = "NONE" })
+        end
+        --]]
     },
     -- Git
     { 'tpope/vim-fugitive' },
