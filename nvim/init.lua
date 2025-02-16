@@ -141,7 +141,7 @@ require("lazy").setup({
                 -- https://rust-analyzer.github.io/book/configuration.html
                 settings = {
                     ['rust-analyzer'] = {},
-                }
+                },
             }
 
             -- Global mappings.
@@ -184,6 +184,13 @@ require("lazy").setup({
 
                     -- I don't like the signs column (E, W, H)
                     vim.diagnostic.config({signs = false})
+
+                    -- Refresh diagnostics more frequently
+                    vim.api.nvim_create_autocmd({"InsertLeave", "TextChanged"}, {
+                        callback = function()
+                            vim.diagnostic.setloclist({ open = false }) -- Refresh diagnostics
+                        end
+                    })
 
                     -- None of this semantics tokens business.
                     client.server_capabilities.semanticTokensProvider = nil
