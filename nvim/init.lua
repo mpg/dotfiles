@@ -32,10 +32,6 @@ vim.g.mapleader = " "
 -- Language settings
 -- -----------------
 
--- Rust: see :help rust
-vim.g.rustfmt_autosave = 1
---vim.g.rustfmt_fail_silently = 1
-
 -- Shortcuts
 -- ---------
 
@@ -189,7 +185,16 @@ require("lazy").setup({
                     vim.api.nvim_create_autocmd({"InsertLeave", "TextChanged"}, {
                         callback = function()
                             vim.diagnostic.setloclist({ open = false }) -- Refresh diagnostics
-                        end
+                        end,
+                        buffer = ev.buf,
+                    })
+
+                    -- Enable format on save
+                    vim.api.nvim_create_autocmd("BufWritePre", {
+                        callback = function()
+                            vim.lsp.buf.format({ async = false })  -- Format before saving
+                        end,
+                        buffer = ev.buf,
                     })
 
                     -- None of this semantics tokens business.
