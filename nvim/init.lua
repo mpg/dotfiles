@@ -1,5 +1,5 @@
--- Basic settings
--- --------------
+-- General settings
+-- ----------------
 
 -- persistent undo - ~/.local/state/nvim/undo/
 vim.opt.undofile = true
@@ -20,6 +20,12 @@ vim.opt.shiftwidth = 4      -- Number of spaces to use for each step of (auto)in
 vim.opt.softtabstop = 4     -- Number of spaces that a <Tab> counts for while editing.
 vim.opt.expandtab = true    -- Insert spaces rather than actual <Tab>s.
 
+-- don't highlight matches from previous searches
+vim.opt.hlsearch = false
+
+-- keep more context on screen while scrolling
+vim.opt.scrolloff = 2
+
 -- never ever folding
 vim.opt.foldenable = false
 vim.opt.foldmethod = 'manual'
@@ -29,11 +35,22 @@ vim.opt.foldlevelstart = 999
 vim.keymap.set("n", "<Space>", "<Nop>", { silent = true })
 vim.g.mapleader = " "
 
--- Language settings
--- -----------------
+-- Per-language settings
+-- ---------------------
+
 
 -- Shortcuts
 -- ---------
+
+-- quick-save
+vim.keymap.set('n', '<leader>w', '<cmd>w<cr>')
+
+-- always center search results
+vim.keymap.set('n', 'n', 'nzz', { silent = true })
+vim.keymap.set('n', 'N', 'Nzz', { silent = true })
+vim.keymap.set('n', '*', '*zz', { silent = true })
+vim.keymap.set('n', '#', '#zz', { silent = true })
+vim.keymap.set('n', 'g*', 'g*zz', { silent = true })
 
 -- shortcuts for spell checking
 vim.api.nvim_create_user_command('Fr', 'setl spell spelllang=fr', {})
@@ -47,21 +64,17 @@ vim.cmd('com -range Ascii silent <line1>,<line2>!iconv -f utf8 -t ascii//transli
 -- -------------
 
 -- jump to last edit position on opening file
-vim.api.nvim_create_autocmd(
-'BufReadPost',
-{
+vim.api.nvim_create_autocmd( 'BufReadPost', {
     pattern = '*',
     callback = function(ev)
         if vim.fn.line("'\"") > 1 and vim.fn.line("'\"") <= vim.fn.line("$") then
             -- except for in git commit messages
-            -- https://stackoverflow.com/questions/31449496/vim-ignore-specifc-file-in-autocommand
             if not vim.fn.expand('%:p'):find('.git', 1, true) then
                 vim.cmd('exe "normal! g\'\\""')
             end
         end
     end
-}
-)
+})
 
 -- Plugins
 -- -------
