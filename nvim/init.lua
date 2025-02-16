@@ -182,6 +182,9 @@ require("lazy").setup({
 
                     local client = vim.lsp.get_client_by_id(ev.data.client_id)
 
+                    -- I don't like the signs column (E, W, H)
+                    vim.diagnostic.config({signs = false})
+
                     -- None of this semantics tokens business.
                     client.server_capabilities.semanticTokensProvider = nil
                 end,
@@ -189,6 +192,7 @@ require("lazy").setup({
         end
     },
     -- LSP-based code-completion
+    --[[
     {
         "hrsh7th/nvim-cmp",
         -- load cmp on InsertEnter
@@ -237,7 +241,9 @@ require("lazy").setup({
             })
         end
     },
+    --]]
     -- inline function signatures
+    --[[
     {
         "ray-x/lsp_signature.nvim",
         event = "VeryLazy",
@@ -252,4 +258,5 @@ require("lazy").setup({
             })
         end
     },
+    --]]
 })
