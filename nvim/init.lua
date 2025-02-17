@@ -268,7 +268,7 @@ require("lazy").setup({
     },
     --]]
     -- inline function signatures
-    --[[
+    -- [[
     {
         "ray-x/lsp_signature.nvim",
         event = "VeryLazy",
@@ -277,6 +277,10 @@ require("lazy").setup({
             -- Get signatures (and _only_ signatures) when in argument lists.
             require "lsp_signature".setup({
                 doc_lines = 0,
+                floating_window = true,
+                floating_window_above_cur_line = false,
+                floating_window_off_y = -2,
+                hint_enable = false,
                 handler_opts = {
                     border = "none"
                 },
