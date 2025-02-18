@@ -123,7 +123,7 @@ require("lazy").setup({
             vim.api.nvim_set_hl(0, "NormalNC", { bg = "NONE" })
         end
         --]]
-        -- [[
+        --[[
         "rebelot/kanagawa.nvim",
         lazy = false, -- load at start
         priority = 1000, -- load first
@@ -143,6 +143,19 @@ require("lazy").setup({
             vim.cmd.colorscheme('melange')
             vim.api.nvim_set_hl(0, "Normal", { bg = "NONE" })
             vim.api.nvim_set_hl(0, "NormalNC", { bg = "NONE" })
+        end
+        --]]
+        -- [[
+        "EdenEast/nightfox.nvim",
+        lazy = false, -- load at start
+        priority = 1000, -- load first
+        config = function()
+            require('nightfox').setup({
+                options = {
+                    transparent = true,
+                },
+            })
+            vim.cmd.colorscheme('carbonfox')
         end
         --]]
     },
