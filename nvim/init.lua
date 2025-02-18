@@ -35,6 +35,9 @@ vim.opt.foldlevelstart = 999
 vim.keymap.set("n", "<Space>", "<Nop>", { silent = true })
 vim.g.mapleader = " "
 
+-- for ins-completion: show the menu (even for one match) but not the preview window
+vim.opt.completeopt = "menuone,noinsert"
+
 -- Per-language settings
 -- ---------------------
 
@@ -189,36 +192,37 @@ require("lazy").setup({
             vim.api.nvim_create_autocmd('LspAttach', {
                 group = vim.api.nvim_create_augroup('UserLspConfig', {}),
                 callback = function(ev)
-                    -- Enable completion triggered by <c-x><c-o>
-                    vim.bo[ev.buf].omnifunc = 'v:lua.vim.lsp.omnifunc'
-
-                    -- Buffer local mappings.
-                    -- See `:help vim.lsp.*` for documentation on any of the below functions
                     local opts = { buffer = ev.buf }
-                    vim.keymap.set('n', 'gD', vim.lsp.buf.declaration, opts)
-                    vim.keymap.set('n', 'gd', vim.lsp.buf.definition, opts)
+
+                    -- Information
                     vim.keymap.set('n', 'K', vim.lsp.buf.hover, opts)
+                    vim.keymap.set('n', 'gd', vim.lsp.buf.definition, opts)
+                    vim.keymap.set('n', 'gD', vim.lsp.buf.declaration, opts)
                     vim.keymap.set('n', 'gi', vim.lsp.buf.implementation, opts)
-                    vim.keymap.set('n', '<C-k>', vim.lsp.buf.signature_help, opts)
-                    vim.keymap.set('n', '<leader>wa', vim.lsp.buf.add_workspace_folder, opts)
-                    vim.keymap.set('n', '<leader>wr', vim.lsp.buf.remove_workspace_folder, opts)
-                    vim.keymap.set('n', '<leader>wl', function()
-                        print(vim.inspect(vim.lsp.buf.list_workspace_folders()))
-                    end, opts)
-                    vim.keymap.set('n', '<space>D', vim.lsp.buf.type_definition, opts)
+                    vim.keymap.set('n', 'gT', vim.lsp.buf.type_definition, opts)
+                    vim.keymap.set('n', 'gr', vim.lsp.buf.references, opts)
+
+                    -- Actions
                     vim.keymap.set('n', '<leader>r', vim.lsp.buf.rename, opts)
                     vim.keymap.set({ 'n', 'v' }, '<leader>a', vim.lsp.buf.code_action, opts)
-                    vim.keymap.set('n', 'gr', vim.lsp.buf.references, opts)
                     vim.keymap.set('n', '<leader>f', function()
                         vim.lsp.buf.format { async = true }
                     end, opts)
 
-                    local client = vim.lsp.get_client_by_id(ev.data.client_id)
+                    -- Omnicomplete with ^P (keep ^N for keyword complete)
+                    vim.bo[ev.buf].omnifunc = 'v:lua.vim.lsp.omnifunc'
+                    vim.keymap.set('i', '<C-p>', '<C-x><C-o>', opts)
 
                     -- I don't like the signs column (E, W, H)
                     vim.diagnostic.config({signs = false})
 
-                    -- Refresh diagnostics more frequently
+                    -- Add a border around the LSP hover window
+                    vim.lsp.handlers["textDocument/hover"] = vim.lsp.with(
+                        vim.lsp.handlers.hover,
+                        { border = "rounded" } -- "single", "double", "shadow"
+                    )
+
+                    -- Refresh diagnostics more frequently (not really working)
                     vim.api.nvim_create_autocmd({"InsertLeave", "TextChanged"}, {
                         callback = function()
                             vim.diagnostic.setloclist({ open = false }) -- Refresh diagnostics
@@ -229,12 +233,13 @@ require("lazy").setup({
                     -- Enable format on save
                     vim.api.nvim_create_autocmd("BufWritePre", {
                         callback = function()
-                            vim.lsp.buf.format({ async = false })  -- Format before saving
+                            vim.lsp.buf.format({ async = false })
                         end,
                         buffer = ev.buf,
                     })
 
-                    -- None of this semantics tokens business.
+                    -- Disable semantics tokens
+                    local client = vim.lsp.get_client_by_id(ev.data.client_id)
                     client.server_capabilities.semanticTokensProvider = nil
                 end,
             })
@@ -292,7 +297,7 @@ require("lazy").setup({
     },
     --]]
     -- inline function signatures
-    -- [[
+    --[[
     {
         "ray-x/lsp_signature.nvim",
         event = "VeryLazy",
@@ -302,8 +307,8 @@ require("lazy").setup({
             require "lsp_signature".setup({
                 doc_lines = 0,
                 floating_window = true,
-                floating_window_above_cur_line = false,
-                floating_window_off_y = -2,
+                floating_window_above_cur_line = true,
+                --floating_window_off_y = -2,
                 hint_enable = false,
                 handler_opts = {
                     border = "none"
