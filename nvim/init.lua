@@ -113,17 +113,28 @@ require("lazy").setup({
         end
         --]]
         --[[
+        'morhetz/gruvbox',
+        lazy = false, -- load at start
+        priority = 1000, -- load first
+        config = function()
+            vim.cmd.colorscheme('gruvbox')
+            -- g:gruvbox_transparent_bg not working for me...
+            vim.api.nvim_set_hl(0, "Normal", { bg = "NONE" })
+            vim.api.nvim_set_hl(0, "NormalNC", { bg = "NONE" })
+        end
+        --]]
+        -- [[
         "rebelot/kanagawa.nvim",
         lazy = false, -- load at start
         priority = 1000, -- load first
         config = function()
             require('kanagawa').setup({
-                transparent = true,
+                -- transparent = true,
             })
             vim.cmd.colorscheme('kanagawa-wave') -- -dragon (low contrast)
         end
         --]]
-        -- [[
+        --[[
         "savq/melange-nvim",
         lazy = false, -- load at start
         priority = 1000, -- load first
