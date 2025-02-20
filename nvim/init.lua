@@ -104,51 +104,6 @@ vim.opt.rtp:prepend(lazypath)
 require("lazy").setup({
     -- main color scheme
     {
-        --[[
-        'sainnhe/gruvbox-material',
-        lazy = false, -- load at start
-        priority = 1000, -- load first
-        config = function()
-            -- see :help gruvbox-material
-            vim.g.gruvbox_material_transparent_background = true
-            vim.g.gruvbox_material_foreground = 'original' -- mix, material
-            vim.cmd.colorscheme('gruvbox-material')
-        end
-        --]]
-        --[[
-        'morhetz/gruvbox',
-        lazy = false, -- load at start
-        priority = 1000, -- load first
-        config = function()
-            vim.cmd.colorscheme('gruvbox')
-            -- g:gruvbox_transparent_bg not working for me...
-            vim.api.nvim_set_hl(0, "Normal", { bg = "NONE" })
-            vim.api.nvim_set_hl(0, "NormalNC", { bg = "NONE" })
-        end
-        --]]
-        --[[
-        "rebelot/kanagawa.nvim",
-        lazy = false, -- load at start
-        priority = 1000, -- load first
-        config = function()
-            require('kanagawa').setup({
-                -- transparent = true,
-            })
-            vim.cmd.colorscheme('kanagawa-wave') -- -dragon (low contrast)
-        end
-        --]]
-        --[[
-        "savq/melange-nvim",
-        lazy = false, -- load at start
-        priority = 1000, -- load first
-        config = function()
-            vim.opt.termguicolors = true
-            vim.cmd.colorscheme('melange')
-            vim.api.nvim_set_hl(0, "Normal", { bg = "NONE" })
-            vim.api.nvim_set_hl(0, "NormalNC", { bg = "NONE" })
-        end
-        --]]
-        -- [[
         "EdenEast/nightfox.nvim",
         lazy = false, -- load at start
         priority = 1000, -- load first
@@ -160,7 +115,6 @@ require("lazy").setup({
             })
             vim.cmd.colorscheme('carbonfox')
         end
-        --]]
     },
     -- Git
     { 'tpope/vim-fugitive' },
@@ -245,76 +199,4 @@ require("lazy").setup({
             })
         end
     },
-    -- LSP-based code-completion
-    --[[
-    {
-        "hrsh7th/nvim-cmp",
-        -- load cmp on InsertEnter
-        event = "InsertEnter",
-        -- these dependencies will only be loaded when cmp loads
-        -- dependencies are always lazy-loaded unless specified otherwise
-        dependencies = {
-            'neovim/nvim-lspconfig',
-            "hrsh7th/cmp-nvim-lsp",
-            "hrsh7th/cmp-buffer",
-            "hrsh7th/cmp-path",
-        },
-        config = function()
-            local cmp = require'cmp'
-            cmp.setup({
-                snippet = {
-                    -- REQUIRED by nvim-cmp. get rid of it once we can
-                    expand = function(args)
-                        vim.fn["vsnip#anonymous"](args.body)
-                    end,
-                },
-                mapping = cmp.mapping.preset.insert({
-                    ['<C-b>'] = cmp.mapping.scroll_docs(-4),
-                    ['<C-f>'] = cmp.mapping.scroll_docs(4),
-                    ['<C-Space>'] = cmp.mapping.complete(),
-                    ['<C-e>'] = cmp.mapping.abort(),
-                    -- Accept currently selected item.
-                    -- Set `select` to `false` to only confirm explicitly selected items.
-                    ['<CR>'] = cmp.mapping.confirm({ select = true }),
-                }),
-                sources = cmp.config.sources({
-                    { name = 'nvim_lsp' },
-                }, {
-                    { name = 'path' },
-                }),
-                experimental = {
-                    ghost_text = true,
-                },
-            })
-
-            -- Enable completing paths in :
-            cmp.setup.cmdline(':', {
-                sources = cmp.config.sources({
-                    { name = 'path' }
-                })
-            })
-        end
-    },
-    --]]
-    -- inline function signatures
-    --[[
-    {
-        "ray-x/lsp_signature.nvim",
-        event = "VeryLazy",
-        opts = {},
-        config = function(_, opts)
-            -- Get signatures (and _only_ signatures) when in argument lists.
-            require "lsp_signature".setup({
-                doc_lines = 0,
-                floating_window = true,
-                floating_window_above_cur_line = true,
-                --floating_window_off_y = -2,
-                hint_enable = false,
-                handler_opts = {
-                    border = "none"
-                },
-            })
-        end
-    },
-    --]]
 })
