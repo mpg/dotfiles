@@ -38,6 +38,9 @@ vim.g.mapleader = " "
 -- for ins-completion: show the menu (even for one match) but not the preview window
 vim.opt.completeopt = "menuone,noinsert"
 
+-- autowrite before ^Z (:suspend) and similar events
+vim.opt.autowrite = true
+
 -- Per-language settings
 -- ---------------------
 
