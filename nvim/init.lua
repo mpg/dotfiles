@@ -52,11 +52,10 @@ vim.opt.autowrite = true
 vim.keymap.set('n', '<leader>w', '<cmd>w<cr>')
 
 -- always center search results
-vim.keymap.set('n', 'n', 'nzz', { silent = true })
-vim.keymap.set('n', 'N', 'Nzz', { silent = true })
-vim.keymap.set('n', '*', '*zz', { silent = true })
-vim.keymap.set('n', '#', '#zz', { silent = true })
-vim.keymap.set('n', 'g*', 'g*zz', { silent = true })
+vim.keymap.set('n', 'n', 'nzz')
+vim.keymap.set('n', 'N', 'Nzz')
+vim.keymap.set('n', '*', '*zz')
+vim.keymap.set('n', '#', '#zz')
 
 -- shortcuts for spell checking
 vim.api.nvim_create_user_command('Fr', 'setl spell spelllang=fr', {})
@@ -65,6 +64,9 @@ vim.api.nvim_create_user_command('En', 'setl spell spelllang=en', {})
 -- transliterate to ascii using GNU iconv (assumes utf8 input)
 vim.cmd('com -range Ascii silent <line1>,<line2>!iconv -f utf8 -t ascii//translit')
 
+-- convenience mappings for inserting }, fi, etc then a line above
+vim.keymap.set('i', '<C-k>', '<Esc>O')
+vim.keymap.set('i', '<C-]>', '<CR>}<Esc>O')
 
 -- Auto commands
 -- -------------
