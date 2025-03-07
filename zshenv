@@ -44,6 +44,12 @@ if [ -r "$HOME/.cargo/env" ]; then
     . "$HOME/.cargo/env"
 fi
 
+# default user venv
+if [ -d "$HOME/usr/user-venv" ]; then
+    VIRTUAL_ENV_DISABLE_PROMPT=1
+    . "$HOME/usr/user-venv/bin/activate"
+fi
+
 # local additions
 if [ -r "$HOME/.zshenv.local" ]; then
     . "$HOME/.zshenv.local"
