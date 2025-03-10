@@ -44,6 +44,12 @@ vim.opt.autowrite = true
 -- Per-language settings
 -- ---------------------
 
+-- A number of ftplugins add 'o' "Automatically insert the current comment
+-- leader after hitting 'o' or 'O' in Normal mode." which I don't like.
+vim.api.nvim_create_autocmd("FileType", {
+  pattern = "*",
+  command = "setlocal formatoptions-=o"
+})
 
 -- Shortcuts
 -- ---------
