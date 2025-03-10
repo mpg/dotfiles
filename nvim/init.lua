@@ -189,7 +189,7 @@ require("lazy").setup({
             -- Setup language servers.
             local lspconfig = require('lspconfig')
 
-            -- Rust
+            -- Rust with rust-analyzer
             lspconfig.rust_analyzer.setup {
                 -- Server-specific settings. See `:help lspconfig-setup`
                 -- https://rust-analyzer.github.io/book/configuration.html
@@ -197,6 +197,16 @@ require("lazy").setup({
                     ['rust-analyzer'] = {},
                 },
             }
+
+            -- Python with ruff (not ruff-lsp)
+            lspconfig.ruff.setup({
+                init_options = {
+                    settings = {
+                        -- Ruff language server settings go here
+                        -- see https://docs.astral.sh/ruff/editors/settings/ ?
+                    }
+                }
+            })
 
             -- Use LspAttach autocommand to only map the following keys
             -- after the language server attaches to the current buffer
