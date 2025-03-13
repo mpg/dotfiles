@@ -47,8 +47,18 @@ vim.opt.autowrite = true
 -- A number of ftplugins add 'o' "Automatically insert the current comment
 -- leader after hitting 'o' or 'O' in Normal mode." which I don't like.
 vim.api.nvim_create_autocmd("FileType", {
-  pattern = "*",
-  command = "setlocal formatoptions-=o"
+    pattern = "*",
+    callback = function()
+        vim.opt_local.formatoptions:remove("o")
+    end
+})
+
+-- TF-PSA-Crypto / Mbed TLS: *.function files are C files (mostly)
+vim.api.nvim_create_autocmd({"BufRead", "BufNewFile"}, {
+    pattern = "*.function",
+    callback = function()
+        vim.bo.filetype = "c"
+    end
 })
 
 -- Shortcuts
