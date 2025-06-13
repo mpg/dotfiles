@@ -288,6 +288,11 @@ dodo () {
     systemctl suspend || (sleep 5m; systemctl suspend)
 }
 
+# mamba from miniforge3 in ~/usr/miniforge3, linked in ~/bin
+if which mamba N; then
+    alias mamba-hook='eval "$(mamba shell hook --shell zsh)"'
+fi
+
 # avoid annoying error code on startup when last test was negative
 true
 
