@@ -23,6 +23,7 @@ path_postpend() {
     fi
 }
 path_prepend "/usr/lib/ccache"
+path_prepend "$HOME/usr/gcc-15/bin"
 path_prepend "$HOME/usr/arm-cortexa5-linux-uclibcgnueabihf/bin"
 path_prepend "$HOME/usr/arm-gnu-toolchain-14.2.rel1-x86_64-arm-none-eabi/bin"
 path_prepend "$HOME/usr/uncrustify-0.75.1/bin"
