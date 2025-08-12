@@ -146,13 +146,15 @@ function on_lsp_attach(ev)
         buffer = ev.buf,
     })
 
-    -- Enable format on save
+    --[[ Enable format on save
+    -- messes up with Mbed TLS Python files...
     vim.api.nvim_create_autocmd("BufWritePre", {
         callback = function()
             vim.lsp.buf.format({ async = false })
         end,
         buffer = ev.buf,
     })
+    --]]
 
     -- Disable semantics tokens
     local client = vim.lsp.get_client_by_id(ev.data.client_id)
