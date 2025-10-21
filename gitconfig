@@ -44,6 +44,7 @@
     lgo         = log --abbrev-commit         --pretty=oneline
 
     review      = log --patch --reverse
+    what-pr     = name-rev --refs 'remotes/*/pr/*'
 
 [sendemail]
     confirm = always
@@ -51,3 +52,8 @@
     recurse = true
 [init]
     defaultBranch = main
+
+# optionally include local config file
+# later settings override earlier ones
+[include]
+    path = .gitconfig.local
