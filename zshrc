@@ -146,7 +146,7 @@ fi
 if which nvim >/dev/null; then
     export EDITOR="nvim"
     alias vim="nvim"
-    alias vimdiff="nvim -c"
+    alias vimdiff="nvim -d"
 elif which vim >/dev/null; then
     export EDITOR="vim"
 else
