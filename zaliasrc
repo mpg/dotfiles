@@ -285,12 +285,16 @@ fi
 
 dodo () {
     sleep ${1:-30}m
-    systemctl suspend || (sleep 5m; systemctl suspend)
+    systemctl suspend || (sleep 5m; systemctl suspend -i)
 }
 
 # mamba from miniforge3 in ~/usr/miniforge3, linked in ~/bin
 if which mamba N; then
     alias mamba-hook='eval "$(mamba shell hook --shell zsh)"'
+fi
+
+if which xclip N; then
+    alias xclear='xclip -selection clipboard </dev/null; xclip </dev/null'
 fi
 
 # avoid annoying error code on startup when last test was negative
