@@ -35,6 +35,8 @@
     virgin      = !sh -c 'git isclean && git symbolic-ref HEAD refs/heads/$1 && rm .git/index && git clean -fdx' -
 
     wtrm        = "!f() { git worktree remove         $1 && git branch -d $1; }; f"
+    wtrmr       = "!f() { git-worktree-rm-r        ../$1 && git branch -d $1; }; f"
+    wtrmrd      = "!f() { git-worktree-rm-r        ../$1 && git branch -D $1; }; f"
     wtrmd       = "!f() { git worktree remove         $1 && git branch -D $1; }; f"
     wtrmf       = "!f() { git worktree remove --force $1 && git branch -D $1; }; f"
 
@@ -48,8 +50,6 @@
 
 [sendemail]
     confirm = always
-[submodule]
-    recurse = true
 [init]
     defaultBranch = main
 
