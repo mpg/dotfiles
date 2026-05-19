@@ -261,8 +261,13 @@ which audacicy N && alias audacity='GDK_BACKEND=x11 audacity'
 # create new worktree
 git-wta () {
     local dir="../$1"; shift
-    git worktree add $dir "$@" && cd $dir
+    git worktree add $dir "$@" && cd $dir || return
     git-worktree-submodules
+    ctags -R .
+    if [ -f ../t.sh ]; then
+        cp ../t.sh $dir
+        cmake -B build
+    fi
 }
 
 # create new worktree to review a PR
