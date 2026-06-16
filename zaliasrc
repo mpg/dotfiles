@@ -264,7 +264,7 @@ git-wta () {
     git worktree add $dir "$@" && cd $dir || return
     git-worktree-submodules
     ctags -R .
-    if [ -f ../t.sh ]; then
+    if [ -f ../t.sh -a -f CMakeLists.txt ]; then
         cp ../t.sh $dir
         cmake -B build
     fi
