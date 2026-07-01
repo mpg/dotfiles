@@ -185,17 +185,17 @@ if which sml N; then
     }
 fi
 
-# get total running time of a bunch of mp3 files
-if which mpg123 N; then
+# get total running time of a bunch of mp3 or mp4 files
+# usage: mp3total foo.mp3 bar.mp3 ...
+if which ffprobe N; then
     mp3total() {
-        local t=0
         for i in "$@"; do
-            mpg123 -t $i 2>&1 | sed -n 's/^\[\([0-9]*\):\([0-9]*\)].*/\1 \2/p'
-        done | while read m s; do
-            t=$(( t + 60 * m + s ))
-        done
-        echo "$(( t / 3600 )):$(( (t % 3600) / 60 )):$(( t % 60 ))"
+             ffprobe -v error -show_entries format=duration \
+                 -of default=nokey=1:noprint_wrappers=1 $i;
+        done |  awk '{t+=$1} END{
+        printf "%02d:%02d:%02d\n", int(t/3600), int((t%3600)/60), int(t%60)}'
     }
+    alias mp4total='mp3total'
 fi
 
 # get total running time of a bunch of ogg files
